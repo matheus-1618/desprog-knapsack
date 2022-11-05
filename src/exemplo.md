@@ -4,15 +4,23 @@ Algoritmo de Knapsack
 Algoritmo de Programação Dinâmica para o Problema da Mochila
 ---------
 
-Para enterdemos melhor a ideia central desse algoritmo, vamos pensar na seguinte situação:
+Para entendermos melhor a ideia central desse algoritmo, imagine o seguinte contexto:
 
-Um mineiro, depois de muitos anos dentro de uma mina, conseguiu encontrar inúmeras pedras preciosas e metais raros. Todavia, ele possui apenas uma pequena mochila que comporta apenas uma certa quantidade de peso sem arrebentar. Dessa forma, qual seria a forma mais eficaz do mineiro conseguir conseguir levar o máximo valor em jóias, sem arrebentar sua pequena mochila?
+Um minerador, depois de muitos anos trabalhando em um centro de garimpo, conseguiu encontrar inúmeras pedras preciosas e metais raros. Todavia, ele possui apenas uma pequena mochila que comporta apenas uma certa quantidade de peso sem arrebentar.
 
+??? Checkpoint
+Qual seria a forma mais eficaz do mineiro conseguir conseguir levar o máximo valor em jóias, sem arrebentar sua pequena mochila?
+
+::: Gabarito
 Algumas soluções imediatas podem ser as seguintes:
 
 * Procurar as peças de maior valor e encher a mochila com as mais valiosas até seu máximo;
 
 * Procurar aquelas que tem menor peso, e pegar a maior quantidade dessas, compensando seu menor valor com maior quantidade;
+
+Todavia, podem existir caminhos melhores...
+:::
+???
 
 Mesmo que estas sejam eficazes, será que existe uma solução que **sempre** retorna a solução mais eficaz para este problema?
 
