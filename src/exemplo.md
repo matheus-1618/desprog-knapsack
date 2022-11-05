@@ -1,10 +1,26 @@
-Título
+Algoritmo de Knapsack
 ======
 
-Subtítulo
+Algoritmo de Programação Dinâmica para o Problema da Mochila
 ---------
 
-Para criar um parágrafo, basta escrever um texto contínuo, sem pular linhas.
+Para enterdemos melhor a ideia central desse algoritmo, vamos pensar na seguinte situação:
+
+Um mineiro, depois de muitos anos dentro de uma mina, conseguiu encontrar inúmeras pedras preciosas e metais raros. Todavia, ele possui apenas uma pequena mochila que comporta apenas uma certa quantidade de peso sem arrebentar. Dessa forma, qual seria a forma mais eficaz do mineiro conseguir conseguir levar o máximo valor em jóias, sem arrebentar sua pequena mochila?
+
+Algumas soluções imediatas podem ser as seguintes:
+
+* Procurar as peças de maior valor e encher a mochila com as mais valiosas até seu máximo;
+
+* Procurar aquelas que tem menor peso, e pegar a maior quantidade dessas, compensando seu menor valor com maior quantidade;
+
+Mesmo que estas sejam eficazes, será que existe uma solução que **sempre** retorna a solução mais eficaz para este problema?
+
+Isso é o que o o algoritmo de programação dinâmica de **Knapsack** propõe: Trazer a solução mais eficaz e adequada para problemas dessa classe.
+
+
+
+
 
 Você também pode criar
 
