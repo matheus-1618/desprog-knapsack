@@ -61,27 +61,82 @@ O valor máximo que pode ser obtido de n itens é o máximo dos dois valores a s
 :::
 ???
 
-Em termos de programação, podemos pensar em uma solução do tipo:
+Seguindo os dois passos anteriores, podemos pensar em uma solução recursiva para esse problema. Inicialmente, é necessário descartar-se os casos de exceção: 
+* Quando o peso da mochila é zero;
+* Quando a quantidade de itens é zero;
+* Quando o peso de um dado item é maior que o peso total da mochila;
 
+Dessa forma, iremos aplicar uma abordagem recursiva que se inicia do enésimo item, e procura analisar os n-1 itens seguintes:
 ``` c
-int knapsack(int peso_max, int pesos[], int valores[], int n) {
-    if (n == 0 || W == 0){
+int mochila(int peso_max, int pesos[], int valores[], int n) {
+    // Analisa se a quantidade de itens, 
+    //ou peso da mochila não são nulos
+    if (n == 0 || peso_max == 0){
         return 0;
     }
-    if (pesos[n - 1] > W){
-        return knapsack(peso_max, pesos, valores, n - 1);
+
+    //Descarta o enésimo item caso este tenha peso 
+    //maior que o peso máximo da mochila
+    if (pesos[n - 1] > peso_max){
+        return mochila(peso_max, pesos, valores, n - 1);
     }
- 
-    // Return the maximum of two cases:
-    // (1) nth item included
-    // (2) not included
-    else {
-        return max(valores[n - 1]+ knapsack(peso_max - pesos[n - 1],pesos, valores, n - 1),
-            knapsack(peso_max, pesos, valores, n - 1));
-        }
 }
 
 ```
+Em seguida, deve-se analisar o máximo entre os dois casos afirmados no último checkpoint:
+* Valor máximo obtido por n-1 itens e peso P da mochila (excluindo n-ésimo item).
+
+* Valor do n-ésimo item mais o valor máximo obtido por n-1 itens e P da mochila menos o peso do n-ésimo item (incluindo o n-ésimo item).
+
+Cria-se uma função auxiliar para o cálculo do máximo dentre dois inteiros:
+``` c
+int max(int a, int b){
+    if (a>b){
+        return a;
+    }
+    return b;
+}
+``` 
+Após a função auxiliar ser definida, basta utilizá-la para definir o máximo entre as duas prerrogativas acima:
+
+``` c
+int mochila(int peso_max, int pesos[], int valores[], int n) {
+    // Analisa se a quantidade de itens, 
+    //ou peso da mochila não são nulos
+    if (n == 0 || W == 0){
+        return 0;
+    }
+    //Descarta o enésimo item caso este tenha peso 
+    //maior que o peso máximo da mochila
+    if (pesos[n - 1] > W){
+        return mochila(peso_max, pesos, valores, n - 1);
+    }
+    //Valor máximo obtido por n-1 itens e 
+    //peso P da mochila (excluindo n-ésimo item).
+    i1 = valores[n - 1] + mochila(peso_max - pesos[n - 1], pesos, 
+    valores, n - 1);
+
+    //Valor do n-ésimo item mais o valor máximo obtido por 
+    //n-1 itens e P da mochila menos o peso do 
+    //n-ésimo item (incluindo o n-ésimo item).
+    i2 = mochila(peso_max, pesos, valores, n - 1);
+
+    //retorna-se o máximo entre 
+    //essas duas possibilidades
+    return max(i1, i2);
+}
+
+```
+
+Feito! O algoritmo acima é conhecido por "*Algoritmo Guloso*" ou "*Força-Bruta*", pois explora todas as combinações de n itens, gerando assim, o total de $2^n$ possibilidades.
+
+Isso ocorre, por conta da função computar os mesmos subcasos a cada recursão, deixando assim a complexidade temporal da solução da forma exponencial, visto que para cada item, existe um subcaso em que o item está e não está:
+$$O(2^n)$$
+
+Como pode-se ver, apesar de uma solução possível, parece exaustiva demais para solucionar o problema. Será que existe maneiras mais adequadas de solucionar o mesmo problema?
+
+Um tradeoff com memória
+---------
 
 ??? Checkpoint
 Implemente uma solução inicial para que dado `md :`
