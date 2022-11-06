@@ -32,11 +32,56 @@ Analisando item a item
 Vamos voltar ao caso do mineiro, e tentar imaginar o seguinte contexto: 
 
 A cada jóia dentro da mineradora, divide-se em dois cenários:
-* Aquele em que a jóia deve estar na mochila;
+* Aquele em que a jóia está na mochila;
 
-* Aquele em que a jóia não deve entrar na mochila;
+* Aquele em que a jóia não está na mochila;
 
 Essas duas possibilidades devem ser analisadas para cada um dos itens, com intuito de se obter o **subconjunto ótimo** da solução, isto é, o determinado conjunto de jóias, que juntos tenham o maior valor agregado e não ultrapassem a determinação de peso da mochila.
+
+Veja abaixo o caso prático, consistente de uma mochila de 20 kg, e três itens (com valores e pesos diferentes) em que se emprega o raciocínio acima para a busca da solução de valor máximo.
+
+![](tree.jpg)
+
+Como pode-se averiguar, as soluções em vermelho não se configuram como possíveis seja por ultrapassarem o peso máximo da mochila, ou por não incluir nenhum item dentro desta.
+
+Entretanto, a solução ótima (aquela cujo valor agregado é maximo), não possui o item que tem o valor unitário máximo (*Item 1*)... 
+
+Isso advém do fato de se observar que, apesar do *Item 1* ter um valor alto, seu peso é grande demais para conseguir comportar este item com qualquer um dos outros dois possíveis. Dessa forma, uma combinação de *Item 2* e *Item 3*, retorna um valor agregado maior, do que o *Item 1* sozinho. Esse ponto mostra que por vezes, nem sempre escolher o item de maior valor primeiro, pode ser certeza de se escolher uma solução ótima...
+
+
+??? Checkpoint
+Qual seriam as formas de se obter o valor máximo (conjunto ótimo) de itens na condição acima?
+
+::: Gabarito
+O valor máximo que pode ser obtido de n itens é o máximo dos dois valores a seguir:
+
+* Valor máximo obtido por n-1 itens e peso `md P` da mochila (excluindo n-ésimo item).
+
+* Valor do n-ésimo item mais o valor máximo obtido por n-1 itens e `md P` da mochila menos o peso do n-ésimo item (incluindo o n-ésimo item).
+:::
+???
+
+Em termos de programação, podemos pensar em uma solução do tipo:
+
+``` c
+int knapsack(int peso_max, int pesos[], int valores[], int n) {
+    if (n == 0 || W == 0){
+        return 0;
+    }
+    if (pesos[n - 1] > W){
+        return knapsack(peso_max, pesos, valores, n - 1);
+    }
+ 
+    // Return the maximum of two cases:
+    // (1) nth item included
+    // (2) not included
+    else {
+        return max(valores[n - 1]+ knapsack(peso_max - pesos[n - 1],pesos, valores, n - 1),
+            knapsack(peso_max, pesos, valores, n - 1));
+        }
+}
+
+```
 
 ??? Checkpoint
 Implemente uma solução inicial para que dado `md :`
