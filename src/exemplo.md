@@ -1,9 +1,6 @@
 Algoritmo de Knapsack
 ======
 
-Algoritmo de Programação Dinâmica para o Problema da Mochila
----------
-
 Para entendermos melhor a ideia central desse algoritmo, imagine o seguinte contexto:
 
 Um minerador, depois de muitos anos trabalhando em um centro de garimpo, conseguiu encontrar inúmeras pedras preciosas e metais raros. Todavia, ele possui apenas uma pequena mochila que comporta apenas uma certa quantidade de peso sem arrebentar.
@@ -22,14 +19,38 @@ Todavia, podem existir caminhos melhores...
 :::
 ???
 
-Mesmo que estas sejam eficazes, será que existe uma solução que **sempre** retorna a solução mais eficaz para este problema?
+Mesmo que estas sejam eficazes, será que existe uma solução (*ou soluções...*) que **sempre** retorna a solução mais eficaz para este problema?
+
 
 Isso é o que o o algoritmo de programação dinâmica de **Knapsack** propõe: Trazer a solução mais eficaz e adequada para problemas dessa classe.
 
+Vamos entender alguns subcasos para melhorar a compreensão do problema.
+
+Analisando item a item
+---------
+
+Vamos voltar ao caso do mineiro, e tentar imaginar o seguinte contexto: 
+
+A cada jóia dentro da mineradora, divide-se em dois cenários:
+* Aquele em que a jóia deve estar na mochila;
+
+* Aquele em que a jóia não deve entrar na mochila;
+
+Essas duas possibilidades devem ser analisadas para cada um dos itens, com intuito de se obter o **subconjunto ótimo** da solução, isto é, o determinado conjunto de jóias, que juntos tenham o maior valor agregado e não ultrapassem a determinação de peso da mochila.
+
+??? Checkpoint
+Implemente uma solução inicial para que dado `md :`
+
+::: Gabarito
+
+:::
+???
 
 
 
 
+Algoritmo de Programação Dinâmica para o Problema da Mochila
+---------
 Você também pode criar
 
 1. listas;
