@@ -103,12 +103,12 @@ Após a função auxiliar ser definida, basta utilizá-la para definir o máximo
 int mochila(int peso_max, int pesos[], int valores[], int n) {
     // Analisa se a quantidade de itens, 
     //ou peso da mochila não são nulos
-    if (n == 0 || W == 0){
+    if (n == 0 || peso_max == 0){
         return 0;
     }
     //Descarta o enésimo item caso este tenha peso 
     //maior que o peso máximo da mochila
-    if (pesos[n - 1] > W){
+    if (pesos[n - 1] > peso_max){
         return mochila(peso_max, pesos, valores, n - 1);
     }
     //Valor máximo obtido por n-1 itens e 
