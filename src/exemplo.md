@@ -113,13 +113,13 @@ int mochila(int peso_max, int pesos[], int valores[], int n) {
     }
     //Valor máximo obtido por n-1 itens e 
     //peso P da mochila (excluindo n-ésimo item).
-    i1 = valores[n - 1] + mochila(peso_max - pesos[n - 1], pesos, 
-    valores, n - 1);
+    i1 = mochila(peso_max, pesos, valores, n - 1);
 
     //Valor do n-ésimo item mais o valor máximo obtido por 
     //n-1 itens e P da mochila menos o peso do 
     //n-ésimo item (incluindo o n-ésimo item).
-    i2 = mochila(peso_max, pesos, valores, n - 1);
+    i2 = valores[n - 1] + mochila(peso_max - pesos[n - 1], pesos, 
+    valores, n - 1);
 
     //retorna-se o máximo entre 
     //essas duas possibilidades
