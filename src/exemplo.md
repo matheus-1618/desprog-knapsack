@@ -137,11 +137,18 @@ Como pode-se ver, apesar de uma solução possível, parece exaustiva demais par
 
 Um tradeoff com memória
 ---------
+Será possível uma maneira de se "consertar" sucessivas recursões de valores? Isto é, criar uma espécie de memória, para que o algoritmo não precise calcular o peso e valor de um item n vezes?
+
+Para isso, podemos abrir utilizar um pouco mais da memória disponível, onde podemos "guaradar" dados já calculados, e assim economizar caso esse mesmo valor seja sugerido ao cálculo durante a recursão novamente.
 
 ??? Checkpoint
-Implemente uma solução inicial para que dado `md :`
+Qual seria a estrutura mais adequada para guardamos valores já calculados?
 
 ::: Gabarito
+Uma matriz de inteiros do tipo 
+``` c
+int **matriz;
+``` 
 
 :::
 ???
