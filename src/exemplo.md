@@ -283,75 +283,12 @@ Compare a complexidade de espaço das duas propostas abordadas.
 
 Apesar de a utilização da memória ser relativamente maior na proposta 2 do que na proposta 1, o ganho economizado por essa alocação auxiliar parece valer a pena, todavia, será que não existem propostas ainda melhores?
 
-Algoritmo de Programação Dinâmica para o Problema da Mochila
+Utilizando Programação dinâmica para o problema
 ---------
-Você também pode criar
+Utilizar uma alocação auxiliar de memória para se evitar o cálculo repetitivo de mesmos subcasos parece uma estratégia interessante a se adotar, mesclando a abordagem de resolução de subcasos ao invés do caso total com esta regalia de guardar valores já combinados.
 
-1. listas;
+Dessa forma, podemos utilizar um tipo de resolução de problemas chamados **programação dinâmica**.
 
-2. ordenadas,
-
-assim como
-
-* listas;
-
-* não-ordenadas
-
-e imagens. Lembre que todas as imagens devem estar em uma subpasta *img*.
-
-![](logo.png)
-
-Para tabelas, usa-se a [notação do
-MultiMarkdown](https://fletcher.github.io/MultiMarkdown-6/syntax/tables.html),
-que é muito flexível. Vale a pena abrir esse link para saber todas as
-possibilidades.
-
-| coluna a | coluna b |
-|----------|----------|
-| 1        | 2        |
-
-Ao longo de um texto, você pode usar *itálico*, **negrito**, {red}(vermelho) e
-[[tecla]]. Também pode usar uma equação LaTeX: $f(n) \leq g(n)$. Se for muito
-grande, você pode isolá-la em um parágrafo.
-
-$$\lim_{n \rightarrow \infty} \frac{f(n)}{g(n)} \leq 1$$
-
-Para inserir uma animação, use `md :` seguido do nome de uma pasta onde as
-imagens estão. Essa pasta também deve estar em *img*.
-
-:bubble
-
-Você também pode inserir código, inclusive especificando a linguagem.
-
-``` py
-def f():
-    print('hello world')
-```
-
-``` c
-void f() {
-    printf("hello world\n");
-}
-```
-
-Se não especificar nenhuma, o código fica com colorização de terminal.
-
-```
-hello world
-```
+A programação dinâmica é um método de desenvolvimento que busca encontrar a solução de vários subproblemas para, daí então, encontrar a solução do problema geral, em uma abordagem chamada bottom-top (ao contrário do que se ocorre com a proposta recursiva).
 
 
-!!! Aviso
-Este é um exemplo de aviso, entre `md !!!`.
-!!!
-
-
-??? Exercício
-
-Este é um exemplo de exercício, entre `md ???`.
-
-::: Gabarito
-Este é um exemplo de gabarito, entre `md :::`.
-:::
-
-???
