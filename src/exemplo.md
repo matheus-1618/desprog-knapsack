@@ -162,24 +162,52 @@ Como pode-se ver, apesar de uma solução possível, parece exaustiva demais par
 
 Um tradeoff com memória
 ---------
-Será possível uma maneira de se "consertar" sucessivas recursões de valores? Isto é, criar uma espécie de memória, para que o algoritmo não precise calcular o peso e valor de um item n vezes?
+Será possível uma maneira de se "consertar" sucessivas recursões de valores? Isto é, criar uma espécie de memória, para que o algoritmo evite  calcular repetidamente o peso e valor de um item n vezes?
 
-Para isso, podemos abrir utilizar um pouco mais da memória disponível, onde podemos "guaradar" dados já calculados, e assim economizar caso esse mesmo valor seja sugerido ao cálculo durante a recursão novamente.
+Para isso, pode-se  utilizar um pouco mais da memória disponível, onde pode-se "guardar" dados já calculados, e assim evitar o cálculo de casos já abordados em outros subcasos.
 
 ??? Checkpoint
-Qual seria a estrutura mais adequada para guardamos valores já calculados?
+Qual seria uma possível estrutura para armazenar valores já calculados?
 
 ::: Gabarito
 Uma matriz de inteiros do tipo 
 ``` c
-int **matriz;
+int **valores;
 ``` 
 
+Onde as linhas são indicaçções do **n** elementos, e as colunas representações dos **P** pesos associados ao subcojunto.
 :::
 ???
 
+Dessa forma, devemos então sempre analisar duas condições a cada item analisado:
+* Se o item já foi analisado, retorna-se esse item sem a necessidade de se recalcular esse subconjunto;
 
+* Se o item não foi analisado, analisa-se este dentro das conjunturas dos dois casos abordados na recursão.
 
+??? Checkpoint
+Qual seria a condição inicial da matriz de valores para se possibilitar uma diferenciação entre um valor já calculado e outro que não?
+
+::: Gabarito
+Inicializar a matriz, com um valor que não seja possível de se obter para a gama de problemas a serem resolvidos.
+
+No contexto do Minerador (o escopo de problemas que pretendemos aqui resolver) não faz sentido estas possuírem pesos ou valores que sejam menores que zero (negativos). Dessa forma, podemos iniciar a matriz com um números negativos, que nos permitam diferenciar entre valores já obtidos e outros não.
+:::
+???
+
+Dessa forma, uma primeira modificação a se realizar é:
+``` c
+int mochila(int peso_max, int pesos[], int valores[], int n) {
+    int **valores;
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < peso_max + 1; j++){
+            valores[i][j] = -1;
+        }
+    }
+    /* Resto do código */
+}
+```
+
+Certo, agora temos uma matriz que irá alocar para dados **n** elementos, **P+1** pesos possíveis, que irão nos economizar cálculos de subcasos já analisados para tal combinação.
 
 Algoritmo de Programação Dinâmica para o Problema da Mochila
 ---------
