@@ -1,9 +1,11 @@
 Algoritmo de Knapsack
 ======
 
-Para entendermos melhor a ideia central desse algoritmo, imagine o seguinte contexto:
+Imagine o seguinte contexto:
 
 Um minerador, depois de muitos anos trabalhando em um centro de garimpo, conseguiu encontrar inúmeras pedras preciosas e metais raros. Todavia, ele possui apenas uma pequena mochila que comporta apenas uma certa quantidade de peso sem arrebentar.
+
+Por termos de simplicidade, ele não possui autorização para quebrar as jóias em outras menores para realizar novas combinações, permitindo-o acumular apenas as jóias brutas, assim como as encontrara.
 
 ??? Checkpoint
 Qual seria a forma mais eficaz do mineiro conseguir conseguir levar o máximo valor em jóias, sem arrebentar sua pequena mochila?
@@ -38,13 +40,28 @@ A cada jóia dentro da mineradora, divide-se em dois cenários:
 
 Essas duas possibilidades devem ser analisadas para cada um dos itens, com intuito de se obter o **subconjunto ótimo** da solução, isto é, o determinado conjunto de jóias, que juntos tenham o maior valor agregado e não ultrapassem a determinação de peso da mochila.
 
-Veja abaixo o caso prático, consistente de uma mochila de 20 kg, e três itens (com valores e pesos diferentes) em que se emprega o raciocínio acima para a busca da solução de valor máximo.
+??? Checkpoint
+Suponha que o mineiro, com uma mochila que comporta até 20kg, encontre três itens com as seguintes propriedades:
+* Item 1: Peso = 14kg; Valor = 10;
+* Item 2: Peso = 7kg; Valor = 4;
+* Item 3: Peso = 8kg; Valor = 7;
 
+Qual seria o **subconjunto ótimo** destes itens, isto é, aquele que que juntos na mochila, retornem o maior valor possível?
+
+**DICA**: Nem sempre os itens de maiores valores pertencerão ao subconjunto ótimo...
+
+::: Gabarito
 ![](tree.jpg)
+
+O Item 1, apesar de possuir o maior valor bruto (10), não se encontra dentro do subconjunto ótimo, curioso não?
+:::
+???
+
+
 
 Como pode-se averiguar, as soluções em vermelho não se configuram como possíveis seja por ultrapassarem o peso máximo da mochila, ou por não incluir nenhum item dentro desta.
 
-Entretanto, a solução ótima (aquela cujo valor agregado é maximo), não possui o item que tem o valor unitário máximo (*Item 1*)... 
+Entretanto, a solução ótima (aquela cujo valor agregado é maximo), não possui o item que tem o valor unitário máximo... 
 
 Isso advém do fato de se observar que, apesar do *Item 1* ter um valor alto, seu peso é grande demais para conseguir comportar este item com qualquer um dos outros dois possíveis. Dessa forma, uma combinação de *Item 2* e *Item 3*, retorna um valor agregado maior, do que o *Item 1* sozinho. Esse ponto mostra que por vezes, nem sempre escolher o item de maior valor primeiro, pode ser certeza de se escolher uma solução ótima...
 
@@ -67,6 +84,11 @@ Seguindo os dois passos anteriores, podemos pensar em uma solução recursiva pa
 * Quando o peso de um dado item é maior que o peso total da mochila;
 
 Dessa forma, iremos aplicar uma abordagem recursiva que se inicia do enésimo item, e procura analisar os n-1 itens seguintes:
+
+!!! Aviso
+Para resolução destes tipos de problema, considera-se apenas inteiros, ou seja, não é  possível pesos ou valores de ponto flutuante..
+!!!
+
 ``` c
 int mochila(int peso_max, int pesos[], int valores[], int n) {
     // Analisa se a quantidade de itens, 
