@@ -148,10 +148,15 @@ int mochila(int peso_max, int pesos[], int valores[], int n) {
 
 ```
 
-Feito! O algoritmo acima é conhecido por "*Algoritmo Guloso*" ou "*Força-Bruta*", pois explora todas as combinações de n itens, gerando assim, o total de $2^n$ possibilidades.
+Feito! O algoritmo acima é conhecido por "*Algoritmo Guloso*" ou "*Força-Bruta*", pois explora todas as combinações de n itens a serem analisados.
+??? Checkpoint
+Qual é a complexidade temporal do algoritmo de Força Bruta?
 
-Isso ocorre, por conta da função computar os mesmos subcasos a cada recursão, deixando assim a complexidade temporal da solução da forma exponencial, visto que para cada item, existe um subcaso em que o item está e não está:
+::: Gabarito
 $$O(2^n)$$
+Isso ocorre, por conta da função computar os mesmos subcasos a cada recursão, deixando assim a complexidade do tipo exponencial, visto que para cada item, existe um subcaso em que o item se engloba e não se engloba, gerando assim, o total de $2^n$ possibilidades.
+:::
+???
 
 Como pode-se ver, apesar de uma solução possível, parece exaustiva demais para solucionar o problema. Será que existe maneiras mais adequadas de solucionar o mesmo problema?
 
