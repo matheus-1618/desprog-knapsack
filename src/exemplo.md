@@ -197,10 +197,10 @@ No contexto do Minerador (o escopo de problemas que pretendemos aqui resolver) n
 Dessa forma, uma primeira modificação a se realizar é:
 ``` c
 int mochila(int peso_max, int pesos[], int valores[], int n) {
-    int **valores;
+    int **valores_matriz;
     for (int i = 0; i < n; i++){
         for (int j = 0; j < peso_max + 1; j++){
-            valores[i][j] = -1;
+            valores_matriz[i][j] = -1;
         }
     }
     /* Resto do código */
@@ -208,6 +208,80 @@ int mochila(int peso_max, int pesos[], int valores[], int n) {
 ```
 
 Certo, agora temos uma matriz que irá alocar para dados **n** elementos, **P+1** pesos possíveis, que irão nos economizar cálculos de subcasos já analisados para tal combinação.
+
+Agora temos que combinar o espaço possibilitado por essa matriz com a estratégia recursiva.
+
+
+??? Checkpoint
+Crie uma função auxiliar chamada *mochila_recusiva*, que receba os mesmos parâmetros de mochila, além da matriz criada, e que resolva os subcasos ainda não calculados via recursão e retorne os calculados caso os encontre na matriz.
+
+**DICA**: Boa parte do código pode ser aproveitado do algoritmo recursivo já construído, lembre-se sempre de armazenar o valor calculado em seus respectivo local na matriz.
+
+::: Gabarito
+``` c
+int mochila_recursiva(int peso_max, int pesos[], int valores[],
+                     int n, int **matriz_valores) {
+    if (n == 0 || peso_max == 0){
+        return 0;
+    }
+
+    //Valor já foi encontrado na matriz
+    if(matriz_valores[n][peso_max] != 1){
+        return matriz_valores[n][peso_max];
+    }
+
+    if (pesos[n - 1] > peso_max){
+        matriz_valores[n][peso_max] = mochila_recursiva(peso_max, pesos, 
+                                            valores, n - 1,matriz_valores);
+        return matriz_valores[n][peso_max];
+    }
+
+    caso1 = mochila_recursiva(peso_max, pesos, valores, n - 1);
+
+    caso2 = valores[n - 1] + mochila_recursiva(peso_max - pesos[n - 1], pesos, 
+    valores, n - 1);
+
+    matriz_valores[n][peso_max] = max(caso1, caso2);
+    return matriz_valores[n][peso_max];
+}
+```
+:::
+???
+
+Assim, basta realizar uma chamada desssa função dentro da função *mochila*:
+
+``` c
+int mochila(int peso_max, int pesos[], int valores[], int n) {
+    int **valores_matriz;
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < peso_max + 1; j++){
+            valores_matriz[i][j] = -1;
+        }
+    }
+    return mochila_recursiva(peso_max, pesos, valores, n - 1, valores_matriz);
+}
+```
+Feito! Conseguimos combinar a orquestração recursiva da abordagem top-down para varrer todos os casos possíveis, com a regalia de não termos de ter que recalcular subcasos já obtidos.
+
+??? Checkpoint
+Qual a complexidade temporal do código acima?
+::: Gabarito
+$$O(pesoMax*n)$$
+Visto que no pior caso, percorre-se todas as entradas da matriz de linhas **n**, e colunas **pesos**.
+???
+
+Dessa maneira, conseguimos uma abordagem um pouco mais eficiente em termos de complexidade temporal.
+??? Checkpoint
+Compare a complexidade de espaço das duas propostas abordadas.
+
+**DICA**: Em recursões utilizadas para **n** elementos, cerca de **n** espaços de pilha auxiliar são alocados durante a execução do código.
+::: Gabarito
+| Proposta 1 | Proposta 2 |
+|----------|----------|
+| $O(n)$        | $O(pesoMax*n)$         |
+???
+
+Apesar de a utilização da memória ser relativamente maior na proposta 2 do que na proposta 1, o ganho economizado por essa alocação auxiliar parece valer a pena, todavia, será que não existem propostas ainda melhores?
 
 Algoritmo de Programação Dinâmica para o Problema da Mochila
 ---------
