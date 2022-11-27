@@ -291,18 +291,17 @@ Dessa forma, podemos utilizar um tipo de resolução de problemas chamados **pro
 
 A programação dinâmica é um método de desenvolvimento que busca encontrar a solução de vários subproblemas para, daí então, encontrar a solução do problema geral, em uma abordagem chamada bottom-top (ao contrário do que se ocorre com a proposta recursiva).
 
-Para facilitar o entendimento do problema, vamos supor que temos um objeto $X_n$ e uma mochila com capacidade $P$. Temos duas possibilidades nessa situação:
+Para ajudar a pensar no desenvolvimento dessa abordagem , vamos novamente retomar a ideia do mineiro e supor que temos um objeto $X_n$ e uma mochila com capacidade $P$. Como ja visto anteriormente, temos duas possibilidades nessa situação:
 
 1. O objeto Xn pertence a solução de configuração ótima da nossa mochila e devemos coloca-lo.
-
 
 
 2. O objeto Xn não pertence a solução ótima da mochila e , portanto ,  não devemos inseri-lo.
 
 ??? Checkpoint
-Podemos tentar transforma as duas sentenças acima em algo um pouco mais semelhante a uma passo matemático. Pense de que forma podemos transforma as sentenças em alog um pouco mais palpável para ser implementado em código.
+Vamos tentar transforma as duas sentenças acima em algo um pouco mais semelhante a uma passo matemático. Pense de que forma podemos transforma as sentenças em algo um pouco mais palpável para ser implementado em código.
 
-**DICA**: Lembre-se que cada objeto i da mochila possui um valor associado $V(i)$ e um peso associado $P_i$.
+**DICA**: *Já vimos isso em um checkpoint anterior!* Lembre-se que cada objeto i da mochila possui um valor associado $V(i)$ e um peso associado $P_i$.
 
 ::: Gabarito
 
@@ -318,9 +317,9 @@ Onde $F(capacidade \ da \  mochila)$ é uma função que representa a solução 
 
 ???
 
-Certo , certo, começamos a ter uma pequena visão de como podemos utilizar uma abordagem recursiva para esse problema. Toda vez que tomamos a decisão de adicionar um objeto $i$ passamos a ter que observar qual seria a solução ótima de um mochila com capacidade $P - P_i$ e $n-1$ objetos para inserir ! **É como se tivessemos analisando uma nova mochila**!
+Toda vez que tomamos a decisão de adicionar um objeto $i$ passamos a ter que observar qual seria a solução ótima de um mochila com capacidade $P - P_i$ e $n-1$ objetos para inserir ! **É como se tivessemos analisando uma nova mochila**!
 
-Essa ideia é fundamental para começarmos a pensar em nosso algorítimo recursivo.
+Essa ideia é fundamental para começarmos a pensar em nosso algorítimo!
 
 ??? Checkpoint
 
@@ -334,3 +333,17 @@ Para o objeto caber na mochila é necessário que seu peso seja inferior a capac
 :::
 
 ???
+
+Vamos dar uma lapidada na expressão matemárica abordada no checkpoint anterior e tentar criar uma forma de decidir se colocamos ou não o objeto na mochila.
+
+Suponha que a função $F(i,p)$ representa a **solução ótima** para os $i$ primeiros elementos de uma mochila com capacidade $P$. Podemos definir essa função de duas maneiras diferentes, uma que considera o caso em que o objeto $i$ cabe na mochila e outra que considera o caso em que ele não cabe na mochila.
+
+![](iteracao2.png)
+
+Legal ! Temos agora uma ideia de como decidir se o objeto está ou não na mochila em seu caso ótimo!
+
+!!! Aviso
+Quando um objeto cabe na mochila , a decisão de coloca-lo ou não é definido pelo máximo entre o valor contido na mochila com o objeto $i$ e sem ele.
+!!!
+
+
