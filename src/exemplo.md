@@ -444,3 +444,62 @@ int knapSack(int W, int wt[], int val[], int n)
 :::
 
 ???
+
+Legal, preenchemos a primeira linha e coluna! Após a implementação acima sua tabela no exemplo prático do mineiro estaria parecida com a mostrada abaixo.
+
+![](table3.png)
+
+
+??? Checkpoint
+
+Tente explica o que cada elemento $(i,j)$ da tabela acima representa, utilizando o exemplo do mineiro como base.
+
+::: Gabarito
+
+**Elemento (1,1)** : Mochila de capacidade 1 com o objeto 1 , de peso = 4 e valor = 8, para adicionar.
+
+**Elemento (1,2)** : Mochila de capacidade 2 com o objeto 1 , de peso = 4 e valor = 8, para adicionar.
+
+**Elemento (1,3)** : Mochila de capacidade 3 com o objeto 1 , de peso = 4 e valor = 8, para adicionar.
+
+...
+
+**Elemento (3,7)** : Mochila de capacidade 7 com o objeto 3 , de peso = 2 e valor = 4, para adicionar.
+
+:::
+
+???
+
+Bem, preeencher a primeira linha e coluna da tabela não pareceu muito desafiador. Vamos tentar agora preencher o seu interior.Para preeencher os demais elementos da matriz vamos ter que aplicar o que vimos anteriormente com a função da solução ótima $F(i,p)$.
+
+$$F(i,p) = 
+\begin{cases}
+Max( F(\ i-1 \ , \ P - P(i) \ ) + V(i) , F(\ i-1 \ , \ P \ ) ) \ \text{, se P(i) < P}\\
+F(\ i-1 \ ,\ P \ ) \ \text{, se P(i) > P}\
+\end{cases}
+$$
+
+??? Checkpoint
+
+Indique como ficaria a expressão acima para o elemento $(1,1)$ da tabela, ou seja, caso em que temos o objeto 1 e a mochila de capacidade 1. 
+
+Indique também qual das condições determinará o valor do elemento $(1,1)$ da tabela.
+
+**DICA** : Que nesse ponto estamos considerando que a capacidade da mochila é 1! Não 7 , que é a capacidade máxima da mochila.
+
+::: Gabarito
+
+$$F(1,1) = 
+\begin{cases}
+Max( F(\ 1-1 \ , \ 1 - P(1) \ ) + V(1) , F(\ 1-1 \ , \ 1 \ ) ) \ \text{, se P(i) < 1}\\
+F(\ 1-1 \ ,\ 1\ ) \ \text{, se P(1) > 1}\
+\end{cases}
+$$ 
+
+Como 4 é maior que 1 , **o objeto 1 não cabe na mochila de capacidade 1**. Assim, o valor $F(1,1)$ fica definido como:
+
+$$F(1,1) = F(0,1) = 0 $$
+
+:::
+
+???
