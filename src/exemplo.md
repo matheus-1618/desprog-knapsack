@@ -359,7 +359,7 @@ int knapSack(int W, int wt[], int val[], int n)
 }
 ```
 
-A função knapSack recebe os seguintes argumentos:
+A `md função knapSack` recebe os seguintes argumentos:
 
 * $\textbf{W}$  : Inteiro que representa o ṕeso da mochila.
 
@@ -369,10 +369,21 @@ A função knapSack recebe os seguintes argumentos:
 
 * $\textbf{n}$   : Inteiro que representa o número de objetos.
 
-Na função definida acima vemos que a função $F(i,p)$ definida anteriormente está representada em forma de matriz. Essa matriz pode ser interpretada como uma **tabela que será preenchida** para a determinação do valor na solução ótima da mochila.
+Na função definida acima vemos que $F(i,p)$ definida anteriormente está representada em forma de matriz. Essa matriz pode ser interpretada como uma **tabela que será preenchida** para a determinação do valor na solução ótima da mochila.
 
 ![](table1.png)
 
+Voltemos novamente ao problema do mireiro e suas joias, imagine a situação em que ele possui os seguintes objetos com seus respectivos pesos e valores:
+
+![](mineiro.png)
+
 ??? Checkpoint
+De acordo com o código da `md função knapSack`, qual a dimensão na matriz que representa $F(i,p)$ ? 
+
+::: Gabarito
+A matriz deve possuir **4 linhas** (0 a 3 objetos) e **7 colunas** (pesos de 0 a capacidade da mochila)
+
+![](tabela2.png)
+:::
 
 ???
