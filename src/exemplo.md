@@ -516,3 +516,43 @@ Usando o raciocíneo do checkpoint anterior, como ficaria a tabela inteiramente 
 :::
 
 ??? 
+
+Após esse checkpoint você deve ter conseguido chegar no subconjunto de que objetos devem ser adicionado na mochila do mineiro para obtermos o maior valor que a "mochila" consegue guardar , em seu caso ótimo.
+
+Por fim, falta finalizarmos o código da `md função knapSack` adicionando a implementação que permite o preenchimento dos demais elementos da matriz.
+
+??? Exercício
+
+Implemente o preenchimento dos demais elementos da matriz no código e faça a função retornar o maior valor guardado na mochila em seu caso ótimo.
+
+::: Gabarito
+
+``` c
+
+int knapSack(int W, int wt[], int val[], int n)
+{
+    int i, w;
+    int F[n + 1][W + 1];
+ 
+    for (i = 0; i <= n; i++)
+    {
+        for (w = 0; w <= W; w++)
+        {
+            if (i == 0 || w == 0)
+                F[i][w] = 0;
+            else if (wt[i - 1] <= w)    // Objeto cabe na mochila
+                F[i][w] = max(val[i - 1]
+                          + F[i - 1][w - wt[i - 1]],
+                          F[i - 1][w]);
+            else
+                F[i][w] = F[i - 1][w]; // Objeto não cabe na mochila
+        }
+    }
+ 
+    return K[n][W];
+}
+```
+
+:::
+
+???
