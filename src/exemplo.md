@@ -346,4 +346,33 @@ Legal ! Temos agora uma ideia de como decidir se o objeto está ou não na mochi
 Quando um objeto cabe na mochila , a decisão de coloca-lo ou não é definido pelo máximo entre o valor contido na mochila com o objeto $i$ e sem ele.
 !!!
 
+Vamos colocar me prática o que aprendemos do problema até agora e tentar criar a função que o resolve de forma dinâmica. Considere a função inicial a seguir:
 
+``` c
+
+int knapSack(int W, int wt[], int val[], int n)
+{
+    int F[n + 1][W + 1];
+    
+    ...
+
+}
+```
+
+A função knapSack recebe os seguintes argumentos:
+
+* $\textbf{W}$  : Inteiro que representa o ṕeso da mochila.
+
+* $\textbf{wt[]}$  : Vetor de inteiros que representa os pesos dos possíveis objetos a serem colocados na mochila. 
+
+* $\textbf{val[]}$  : Vetor de inteiros que representa os valores dos objetos que podem ser colocados na mochila.
+
+* $\textbf{n}$   : Inteiro que representa o número de objetos.
+
+Na função definida acima vemos que a função $F(i,p)$ definida anteriormente está representada em forma de matriz. Essa matriz pode ser interpretada como uma **tabela que será preenchida** para a determinação do valor na solução ótima da mochila.
+
+![](table1.png)
+
+??? Checkpoint
+
+???
