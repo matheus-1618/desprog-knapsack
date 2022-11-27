@@ -373,6 +373,14 @@ Na função definida acima vemos que $F(i,p)$ definida anteriormente está repre
 
 ![](table1.png)
 
+!!! Aviso
+
+* Cada coluna da tabela  mostrada representa a condição em que temos **n objetos (n1,n2,n3...) a serem adicionados em um mochila de capacidade específica p**. 
+
+* Cada linha esta representando a situação em que temos apenas **um objeto específico que pode ou não ser adicionado a mochilas de diversas capacidades p (p1,p2,p3 .. pn)**.
+
+!!!
+
 Voltemos novamente ao problema do mireiro e suas joias, imagine a situação em que ele possui os seguintes objetos com seus respectivos pesos e valores:
 
 ![](mineiro.png)
@@ -384,6 +392,55 @@ De acordo com o código da `md função knapSack`, qual a dimensão na matriz qu
 A matriz deve possuir **4 linhas** (0 a 3 objetos) e **7 colunas** (pesos de 0 a capacidade da mochila)
 
 ![](tabela2.png)
+:::
+
+???
+
+??? Checkpoint
+
+O que a primeira linha e a primeira coluna da tabela $F[n+1][W+1]$ representa?
+
+::: Gabarito
+
+1 . A primeira linha da matriz representa a situação em que temos uma mochila de capacidade P, mas nenhum objeto para adicionar ($F(0,P)$). Nesse caso, o valor adicionado a mochila é zero!
+
+2 . A primeira coluna da matriz representa a situação em que temos n objetos que podem ser adicionados em uma mochila de capacidade $P = 0$  ($F(n,0)$) . Nesse caso também não consigo adicionar nenhum objeto. 
+
+:::
+
+???
+
+??? Exercício
+
+Sabendo que a primeira linha e coluna da matriz precisa ser zerada, de que forma podemos representar isso em código na `md função knapSack` ?
+
+**DICA** : Construa uma estrtutura que "varre" a matriz passando por todos os seus elementos.
+
+::: Gabarito
+
+``` c
+
+int knapSack(int W, int wt[], int val[], int n)
+{
+    int F[n + 1][W + 1];
+    
+    for (int i = 0; i <= n; i++)   // Varre objetos (linhas)
+    {
+        for (int w = 0; w <= W; w++)   // Varre capacidades (colunas)
+        {
+            
+            if (i == 0 || w == 0){
+                K[i][w] = 0; 
+            }
+
+            ...
+
+        }
+    }
+
+}
+```
+
 :::
 
 ???
