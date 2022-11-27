@@ -474,7 +474,7 @@ Bem, preeencher a primeira linha e coluna da tabela não pareceu muito desafiado
 
 $$F(i,p) = 
 \begin{cases}
-Max( F(\ i-1 \ , \ P - P(i) \ ) + V(i) , F(\ i-1 \ , \ P \ ) ) \ \text{, se P(i) < P}\\
+Max( F(\ i-1 \ , \ P - P(i) \ ) + V(i) , F(\ i-1 \ , \ P \ ) ) \ \text{, se P(i) <= P}\\
 F(\ i-1 \ ,\ P \ ) \ \text{, se P(i) > P}\
 \end{cases}
 $$
@@ -491,7 +491,7 @@ Indique também qual das condições determinará o valor do elemento $(1,1)$ da
 
 $$F(1,1) = 
 \begin{cases}
-Max( F(\ 1-1 \ , \ 1 - P(1) \ ) + V(1) , F(\ 1-1 \ , \ 1 \ ) ) \ \text{, se P(i) < 1}\\
+Max( F(\ 1-1 \ , \ 1 - P(1) \ ) + V(1) , F(\ 1-1 \ , \ 1 \ ) ) \ \text{, se P(i) <= 1}\\
 F(\ 1-1 \ ,\ 1\ ) \ \text{, se P(1) > 1}\
 \end{cases}
 $$ 
@@ -503,3 +503,16 @@ $$F(1,1) = F(0,1) = 0 $$
 :::
 
 ???
+
+
+??? Exercício
+
+Usando o raciocíneo do checkpoint anterior, como ficaria a tabela inteiramente preenchida?
+
+::: Gabarito
+
+:table
+
+:::
+
+??? 
