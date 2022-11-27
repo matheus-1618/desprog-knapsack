@@ -291,4 +291,27 @@ Dessa forma, podemos utilizar um tipo de resolução de problemas chamados **pro
 
 A programação dinâmica é um método de desenvolvimento que busca encontrar a solução de vários subproblemas para, daí então, encontrar a solução do problema geral, em uma abordagem chamada bottom-top (ao contrário do que se ocorre com a proposta recursiva).
 
+Para facilitar o entendimento do problema, vamos supor que temos um objeto $X_n$ e uma mochila com capacidade $P$. Temos duas possibilidades nessa situação:
 
+1. O objeto Xn pertence a solução de configuração ótima da nossa mochila e devemos coloca-lo.
+
+
+
+2. O objeto Xn não pertence a solução ótima da mochila e , portanto ,  não devemos inseri-lo.
+
+??? Checkpoint
+Podemos tentar transforma as duas sentenças acima em algo um pouco mais semelhante a uma passo matemático. Pense de que forma podemos transforma as sentenças em alog um pouco mais palpável para ser implementado em código.
+
+**DICA**: Lembre-se que cada objeto i da mochila possui um valor associado $V(i)$ e um peso associado $P_i$.
+
+::: Gabarito
+
+1.  O objeto $X_n$ está na solução ótima :  V(n) + $F(P - P_n)$ 
+
+2. O objeto $X_n$ não está na solução ótima :  $F(P)$
+
+Onde $F(capacidade \ da \  mochila)$ é uma função que representa a solução ótima da mochila com aquela capacidade e apenas $n-1$ elementos  restantes para adicionar.
+
+:::
+
+???
