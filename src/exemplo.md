@@ -306,12 +306,31 @@ Podemos tentar transforma as duas sentenças acima em algo um pouco mais semelha
 
 ::: Gabarito
 
-1.  O objeto $X_n$ está na solução ótima :  V(n) + $F(P - P_n)$ 
+![](ideacaoMatematica.png)
 
-2. O objeto $X_n$ não está na solução ótima :  $F(P)$
+1.  O objeto $X_n$ está na solução ótima :  V(n) + $F(n-1 , P - P_n)$ 
+
+2. O objeto $X_n$ não está na solução ótima :  $F(n-1 , P)$
 
 Onde $F(capacidade \ da \  mochila)$ é uma função que representa a solução ótima da mochila com aquela capacidade e apenas $n-1$ elementos  restantes para adicionar.
 
+:::
+
+???
+
+Certo , certo, começamos a ter uma pequena visão de como podemos utilizar uma abordagem recursiva para esse problema. Toda vez que tomamos a decisão de adicionar um objeto $i$ passamos a ter que observar qual seria a solução ótima de um mochila com capacidade $P - P_i$ e $n-1$ objetos para inserir ! **É como se tivessemos analisando uma nova mochila**!
+
+Essa ideia é fundamental para começarmos a pensar em nosso algorítimo recursivo.
+
+??? Checkpoint
+
+Qual condição deve ser necessáriamente satisfeita para que um objeto esteja dentro da mochila?
+
+**DICA**: Pense no conceito de capacidade.
+
+::: Gabarito
+
+Para o objeto caber na mochila é necessário que seu peso seja inferior a capacidade da mochila. Ou seja, seja o objeto $i$ pode está na mochila se $peso(i) < P$ , onde P é a capacidade dessa mochila.
 :::
 
 ???
