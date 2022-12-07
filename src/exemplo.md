@@ -146,39 +146,38 @@ Isso advém do fato de se observar que, apesar do *Item 1* ter um valor alto, se
 Esse ponto mostra que por vezes, nem sempre escolher o item de maior valor primeiro, pode ser certeza de se escolher uma solução ótima...
 
 
-??? Checkpoint
-Vamos tentar transforma as duas sentenças acima em algo um pouco mais semelhante a uma passo matemático. Pense de que forma podemos transforma as sentenças em algo um pouco mais palpável para ser implementado em código.
+Nesse ponto você deve ser capaz de entender qual a ideia por traz do problema da mochila e uma ideia inicial de como é possível resolve-lo formando o melhor subconjunto de itens possível.
+Vamos agora tentar transformar os conceitos aprendidos em uma implementação recursiva.
 
-**DICA**: Lembre-se que cada joia $i$ que pode ser adicionada na mochila possui um valor associado $V(i)$ e um peso associado $P_i$.
+??? Checkpoint
+
+Lembra-se das possíveis situações que temos ao possuirmos uma joia $Xn$ e uma mochila de capacidade $P$?
+Essa joia pode ou não está na solução ótima da mochila.
+
+Vamos tentar transforma essa situação em algo um pouco mais semelhante a uma passo recursivo. 
+
+Para isso considere uma função $F(x,C)$ que representa a soma de valores das joias da configuração ótima quando possuimos **x jóias a serem adicionadas e uma mochila de capacidade c**.
+
+
+**DICA**: Lembre-se que cada joia $n$ que pode ser adicionada na mochila possui um valor associado $V(n)$ e um peso associado $P(n)$.
+          
+          - Se eu adiciono um item na mochila , eu acrescento seu valor a soma de valores, e diminuo a capacidade C da mochila.
+          
+          - Se eu não adiciono um item x , eu ainda possui x-1 itens para adicionar a uma mochila de capacidade C.
 
 ::: Gabarito
 
 ![](ideacaoMatematica.png)
 
-1. A joia $X_n$ está na solução ótima :  V(n) + $F(n-1 , P - P_n)$ 
+1. A joia $X_n$ está na solução ótima :  Valor(n) + $F(n-1 , P - P(n))$ 
 
 2. A joia $X_n$ não está na solução ótima :  $F(n-1 , P)$
 
-Onde $F(capacidade \ da \  mochila)$ é uma função que representa a solução ótima da mochila com aquela capacidade e apenas $n-1$ elementos restantes para adicionar.
-
 :::
 
 ???
 
-
-??? Checkpoint
-Qual seriam as formas de se obter o valor máximo (conjunto ótimo) de itens na condição acima?
-
-::: Gabarito
-O valor máximo que pode ser obtido de n itens é o máximo dos dois valores a seguir:
-
-* Valor máximo obtido por n-1 itens e peso `md P` da mochila (excluindo n-ésimo item).
-
-* Valor do n-ésimo item mais o valor máximo obtido por n-1 itens e `md P` da mochila menos o peso do n-ésimo item (incluindo o n-ésimo item).
-:::
-???
-
-Seguindo os dois passos anteriores, podemos pensar em uma solução recursiva para esse problema. Inicialmente, é necessário descartar-se os casos de exceção: 
+Seguindo os passos anteriores, podemos pensar em uma solução recursiva para esse problema. Inicialmente, é necessário descartar-se os casos de exceção: 
 * Quando o peso da mochila é zero;
 * Quando a quantidade de itens é zero;
 * Quando o peso de um dado item é maior que o peso total da mochila;
