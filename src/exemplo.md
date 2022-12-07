@@ -3,6 +3,8 @@ Algoritmo de Knapsack
 
 Imagine o seguinte contexto:
 
+![](init_problem_img.png)
+
 Um minerador, depois de muitos anos trabalhando em um centro de garimpo, conseguiu encontrar inúmeras pedras preciosas e metais raros. Todavia, ele possui apenas uma pequena mochila que comporta apenas uma certa quantidade de peso sem arrebentar.
 
 Por termos de simplicidade, ele não possui autorização para quebrar as jóias em outras menores para realizar novas combinações, permitindo-o acumular apenas as jóias brutas, assim como as encontrara.
@@ -33,36 +35,135 @@ Analisando item a item
 
 Vamos voltar ao caso do mineiro, e tentar imaginar o seguinte contexto: 
 
-A cada jóia dentro da mineradora, divide-se em dois cenários:
-* Aquele em que a jóia está na mochila;
+Suponha que temos uma joia Xn, que podemos ou não colocar em nossa mochila de capacidade $P$. 
+Temos assim dois possíveis cenários para obter a **configuração ótima** da mochila: 
 
-* Aquele em que a jóia não está na mochila;
+1. A joia Xn pertence a solução de **configuração ótima** da nossa mochila e devemos coloca-lo.
 
-Essas duas possibilidades devem ser analisadas para cada um dos itens, com intuito de se obter o **subconjunto ótimo** da solução, isto é, o determinado conjunto de jóias, que juntos tenham o maior valor agregado e não ultrapassem a determinação de peso da mochila.
+
+2. O joia Xn não pertence a **solução ótima** da mochila e , portanto ,  não devemos inseri-lo.
+
 
 ??? Checkpoint
-Suponha que o mineiro, com uma mochila que comporta até 20kg, encontre três itens com as seguintes propriedades:
-* Item 1: Peso = 14kg; Valor = 10;
-* Item 2: Peso = 7kg;  Valor = 4;
-* Item 3: Peso = 8kg;  Valor = 7;
 
-Qual seria o **subconjunto ótimo** destes itens, isto é, aquele que que juntos na mochila, retornem o maior valor possível?
+Qual condição deve ser necessáriamente satisfeita para que a joia esteja dentro da mochila?
 
-**DICA**: Nem sempre os itens de maiores valores pertencerão ao subconjunto ótimo...
+**DICA**: Pense no conceito de capacidade.
+
+::: Gabarito
+
+Para a joia está na mochila é necessário que seu peso seja inferior a capacidade da mochila. Ou seja, a joia $i$ pode está na mochila se $peso(i) < P$ , onde P é a capacidade dessa mochila.
+:::
+
+???
+
+Essas duas possibilidades devem ser analisadas para cada um dos itens, com intuito de se obter o **subconjunto ótimo** da solução. 
+
+Falamos bastante sobre "Configuração ótima" , "Subconjunto ótimo" , "Solução ótima" , mas o que exatamente seria isso? 
+
+O **subconjunto ótimo** nada mais é que o conjunto de jóias, que juntos tem o maior valor agregado e que a soma de seus pesoas não ultrapassa a determinação de peso da mochila!
+
+Ata! Beleza , beleza , dicionário atualizado ! Vamos agora tentar por meio de um exercício desenvolver a configuração ótima da mochila do mineiro na seguinte situação que se segue.
+
+Suponha que o mineiro, com uma **mochila que comporta até 20kg**, encontre três itens com as seguintes propriedades:
+
+<img src="questao1_guloso.png" alt="questao1" width="450" style="display: block; margin: 0 auto"/>
+&nbsp;
+
+
+??? Exercício
+
+Vamos começar bem do começo ... 
+
+Olhando para a tabela , liste todos os subconjuntos de joias você consegue formar, **sem se importar se o subconjunto ultrapassa ou não a capacidade da mochila**.
+
+**DICA**: Pegue papel e caneta e tente listar todas as possiveis configurações da mochila.
+
+::: Gabarito
+
+* Subconjunto vazio : [ ]
+
+* Subconjuntos de 1 joia apenas : [1] , [2] , [3]
+
+* Subconjuntos de 2 joias : [1 , 2] , [1 , 3] , [2 , 3]
+
+* Subconjunto de 3 joias : [1 , 2 , 3]
+
+:::
+???
+
+??? Checkpoint 
+
+Qual elemento parece ter sido adicionado ao conjunto [1] para obtermos o subconjunto [1,2] ? 
+
+Busque asssociar sua resposta com os cenários possíveis de ocorrer quando temos um joia Xn para ser colocado na mochila.
+
+
+::: Gabarito
+
+
+Tendo a joia [1] na mochila, foi adicionada a joia [2] para formar o subconjunto [1,2] de joias  na mochila.
+
+Podemos visualizar isso por meio de um diagrama árvore como o mostrado abaixo.
+
+
+![](inicia_arvore.png)
+
+Analisando qual o peso da mochila nas duas situações percebemos que o subconjunto [1,2] não é viável quando consideramos a capacidade da mochila de 20kg.
+
+:::
+???
+
+A ideia de construir uma árvore  (abordada no checkpoint anterior) para a representação dos subconjuntos possíveis de joias na mochila parece ser uma ideia bem interessante e visual para entendermos o problema.
+
+A árvore a seguir busca formar todos os subconjuntos possíveis de joias dentro da mochila utilizando a ideia citada no checkpoint, mas ela esta incompleta ...
+
+<img src="arvore_incompleta.png" alt="arvore incompleta" width="600" style="display: block; margin: 0 auto"/>
+&nbsp;
+
+??? Checkpoint
+
+Tente completar a árvore, adicionando as condições em que joia [3] estaria dentro ou fora da mochila, seguindo o mesmo raciocíneo do inicio da árvore.
+
+No ultimo andar de construção dessa árvore vocẽ deve obter todos os subconjuntos possíveis de configuração da mochila. 
 
 ::: Gabarito
 ![](tree.jpg)
+
+
+Observe que as configurações pintadas de vermelho não se configuram como soluções possíveis quando consideramos a capacidade da mochila , ou por ultrapassar essa capacidade ou por não incluir nenhum item dentro desta.
+
+A configuração pintada de verde parece apresentar o maior valor agregado respeitando a capacidade máxima da mochila.
 
 O Item 1, apesar de possuir o maior valor bruto (10), não se encontra dentro do subconjunto ótimo, curioso não?
 :::
 ???
 
+Como é possível observar , a solução ótima encontrada (aquela cujo valor agregado é maximo), não possui o item que tem o valor unitário máximo... 
 
-Como pode-se averiguar, as soluções em vermelho não se configuram como possíveis seja por ultrapassarem o peso máximo da mochila, ou por não incluir nenhum item dentro desta.
+Isso advém do fato de se observar que, apesar do *Item 1* ter um valor alto, seu peso é grande demais para conseguir comportar este item com qualquer um dos outros dois possíveis. Dessa forma, uma combinação de *Item 2* e *Item 3*, retorna um valor agregado maior, do que o *Item 1* sozinho. 
 
-Entretanto, a solução ótima (aquela cujo valor agregado é maximo), não possui o item que tem o valor unitário máximo... 
+Esse ponto mostra que por vezes, nem sempre escolher o item de maior valor primeiro, pode ser certeza de se escolher uma solução ótima...
 
-Isso advém do fato de se observar que, apesar do *Item 1* ter um valor alto, seu peso é grande demais para conseguir comportar este item com qualquer um dos outros dois possíveis. Dessa forma, uma combinação de *Item 2* e *Item 3*, retorna um valor agregado maior, do que o *Item 1* sozinho. Esse ponto mostra que por vezes, nem sempre escolher o item de maior valor primeiro, pode ser certeza de se escolher uma solução ótima...
+
+??? Checkpoint
+Vamos tentar transforma as duas sentenças acima em algo um pouco mais semelhante a uma passo matemático. Pense de que forma podemos transforma as sentenças em algo um pouco mais palpável para ser implementado em código.
+
+**DICA**: Lembre-se que cada joia $i$ que pode ser adicionada na mochila possui um valor associado $V(i)$ e um peso associado $P_i$.
+
+::: Gabarito
+
+![](ideacaoMatematica.png)
+
+1. A joia $X_n$ está na solução ótima :  V(n) + $F(n-1 , P - P_n)$ 
+
+2. A joia $X_n$ não está na solução ótima :  $F(n-1 , P)$
+
+Onde $F(capacidade \ da \  mochila)$ é uma função que representa a solução ótima da mochila com aquela capacidade e apenas $n-1$ elementos restantes para adicionar.
+
+:::
+
+???
 
 
 ??? Checkpoint
@@ -160,179 +261,25 @@ Isso ocorre, por conta da função computar os mesmos subcasos a cada recursão,
 
 Como pode-se ver, apesar de uma solução possível, parece exaustiva demais para solucionar o problema. Será que existe maneiras mais adequadas de solucionar o mesmo problema?
 
-Um tradeoff com memória
+Utilizando Programação dinâmica
 ---------
-Será possível uma maneira de se "consertar" sucessivas recursões de valores? Isto é, criar uma espécie de memória, para que o algoritmo evite  calcular repetidamente o peso e valor de um item n vezes?
 
-Para isso, pode-se  utilizar um pouco mais da memória disponível, onde pode-se "guardar" dados já calculados, e assim evitar o cálculo de casos já abordados em outros subcasos.
+A programação dinâmica é um método de desenvolvimento que busca encontrar a solução de vários subproblemas para, daí então, encontrar a solução do problema geral, em uma abordagem chamada bottom-top (ao contrário do que se ocorre com a proposta recursiva visto anteriormente).
 
 ??? Checkpoint
-Qual seria uma possível estrutura para armazenar valores já calculados?
+
+Legal ... Abordagem bottom up, talvez você conheça algum algorítimo que também usa essa estratégia. 
+Algum palpite ? 
 
 ::: Gabarito
-Uma matriz de inteiros do tipo 
-``` c
-int **valores;
-``` 
 
-Onde as linhas são indicaçções do **n** elementos, e as colunas representações dos **P** pesos associados ao subcojunto.
 :::
 ???
 
-Dessa forma, devemos então sempre analisar duas condições a cada item analisado:
-* Se o item já foi analisado, retorna-se esse item sem a necessidade de se recalcular esse subconjunto;
-
-* Se o item não foi analisado, analisa-se este dentro das conjunturas dos dois casos abordados na recursão.
-
-??? Checkpoint
-Qual seria a condição inicial da matriz de valores para se possibilitar uma diferenciação entre um valor já calculado e outro que não?
-
-::: Gabarito
-Inicializar a matriz, com um valor que não seja possível de se obter para a gama de problemas a serem resolvidos.
-
-No contexto do Minerador (o escopo de problemas que pretendemos aqui resolver) não faz sentido estas possuírem pesos ou valores que sejam menores que zero (negativos). Dessa forma, podemos iniciar a matriz com um números negativos, que nos permitam diferenciar entre valores já obtidos e outros não.
-:::
-???
-
-Dessa forma, uma primeira modificação a se realizar é:
-``` c
-int mochila(int peso_max, int pesos[], int valores[], int n) {
-    int **valores_matriz;
-    for (int i = 0; i < n; i++){
-        for (int j = 0; j < peso_max + 1; j++){
-            valores_matriz[i][j] = -1;
-        }
-    }
-    /* Resto do código */
-}
-```
-
-Certo, agora temos uma matriz que irá alocar para dados **n** elementos, **P+1** pesos possíveis, que irão nos economizar cálculos de subcasos já analisados para tal combinação.
-
-Agora temos que combinar o espaço possibilitado por essa matriz com a estratégia recursiva.
-
-
-??? Checkpoint
-Crie uma função auxiliar chamada *mochila_recusiva*, que receba os mesmos parâmetros de mochila, além da matriz criada, e que resolva os subcasos ainda não calculados via recursão e retorne os calculados caso os encontre na matriz.
-
-**DICA**: Boa parte do código pode ser aproveitado do algoritmo recursivo já construído, lembre-se sempre de armazenar o valor calculado em seus respectivo local na matriz.
-
-::: Gabarito
-``` c
-int mochila_recursiva(int peso_max, int pesos[], int valores[],
-                     int n, int **matriz_valores) {
-    if (n == 0 || peso_max == 0){
-        return 0;
-    }
-
-    //Valor já foi encontrado na matriz
-    if(matriz_valores[n][peso_max] != 1){
-        return matriz_valores[n][peso_max];
-    }
-
-    if (pesos[n - 1] > peso_max){
-        matriz_valores[n][peso_max] = mochila_recursiva(peso_max, pesos, 
-                                            valores, n - 1,matriz_valores);
-        return matriz_valores[n][peso_max];
-    }
-
-    caso1 = mochila_recursiva(peso_max, pesos, valores, n - 1);
-
-    caso2 = valores[n - 1] + mochila_recursiva(peso_max - pesos[n - 1], pesos, 
-    valores, n - 1);
-
-    matriz_valores[n][peso_max] = max(caso1, caso2);
-    return matriz_valores[n][peso_max];
-}
-```
-:::
-???
-
-Assim, basta realizar uma chamada desssa função dentro da função *mochila*:
-
-``` c
-int mochila(int peso_max, int pesos[], int valores[], int n) {
-    int **valores_matriz;
-    for (int i = 0; i < n; i++){
-        for (int j = 0; j < peso_max + 1; j++){
-            valores_matriz[i][j] = -1;
-        }
-    }
-    return mochila_recursiva(peso_max, pesos, valores, n - 1, valores_matriz);
-}
-```
-Feito! Conseguimos combinar a orquestração recursiva da abordagem top-down para varrer todos os casos possíveis, com a regalia de não termos de ter que recalcular subcasos já obtidos.
-
-??? Checkpoint
-Qual a complexidade temporal do código acima?
-::: Gabarito
-$$O(pesoMax*n)$$
-Visto que no pior caso, percorre-se todas as entradas da matriz de linhas **n**, e colunas **pesos**.
-???
-
-Dessa maneira, conseguimos uma abordagem um pouco mais eficiente em termos de complexidade temporal.
-??? Checkpoint
-Compare a complexidade de espaço das duas propostas abordadas.
-
-**DICA**: Em recursões utilizadas para **n** elementos, cerca de **n** espaços de pilha auxiliar são alocados durante a execução do código.
-::: Gabarito
-| Proposta 1 | Proposta 2 |
-|----------|----------|
-| $O(n)$        | $O(pesoMax*n)$         |
-???
-
-Apesar de a utilização da memória ser relativamente maior na proposta 2 do que na proposta 1, o ganho economizado por essa alocação auxiliar parece valer a pena, todavia, será que não existem propostas ainda melhores?
-
-Utilizando Programação dinâmica para o problema
----------
-Utilizar uma alocação auxiliar de memória para se evitar o cálculo repetitivo de mesmos subcasos parece uma estratégia interessante a se adotar, mesclando a abordagem de resolução de subcasos ao invés do caso total com esta regalia de guardar valores já combinados.
-
-Dessa forma, podemos utilizar um tipo de resolução de problemas chamados **programação dinâmica**.
-
-A programação dinâmica é um método de desenvolvimento que busca encontrar a solução de vários subproblemas para, daí então, encontrar a solução do problema geral, em uma abordagem chamada bottom-top (ao contrário do que se ocorre com a proposta recursiva).
-
-Para ajudar a pensar no desenvolvimento dessa abordagem , vamos novamente retomar a ideia do mineiro e supor que temos um objeto $X_n$ e uma mochila com capacidade $P$. Como ja visto anteriormente, temos duas possibilidades nessa situação:
-
-1. O objeto Xn pertence a solução de configuração ótima da nossa mochila e devemos coloca-lo.
-
-
-2. O objeto Xn não pertence a solução ótima da mochila e , portanto ,  não devemos inseri-lo.
-
-??? Checkpoint
-Vamos tentar transforma as duas sentenças acima em algo um pouco mais semelhante a uma passo matemático. Pense de que forma podemos transforma as sentenças em algo um pouco mais palpável para ser implementado em código.
-
-**DICA**: *Já vimos isso em um checkpoint anterior!* Lembre-se que cada objeto i da mochila possui um valor associado $V(i)$ e um peso associado $P_i$.
-
-::: Gabarito
-
-![](ideacaoMatematica.png)
-
-1.  O objeto $X_n$ está na solução ótima :  V(n) + $F(n-1 , P - P_n)$ 
-
-2. O objeto $X_n$ não está na solução ótima :  $F(n-1 , P)$
-
-Onde $F(capacidade \ da \  mochila)$ é uma função que representa a solução ótima da mochila com aquela capacidade e apenas $n-1$ elementos  restantes para adicionar.
-
-:::
-
-???
 
 Toda vez que tomamos a decisão de adicionar um objeto $i$ passamos a ter que observar qual seria a solução ótima de um mochila com capacidade $P - P_i$ e $n-1$ objetos para inserir ! **É como se tivessemos analisando uma nova mochila**!
 
 Essa ideia é fundamental para começarmos a pensar em nosso algorítimo!
-
-??? Checkpoint
-
-Qual condição deve ser necessáriamente satisfeita para que um objeto esteja dentro da mochila?
-
-**DICA**: Pense no conceito de capacidade.
-
-::: Gabarito
-
-Para o objeto caber na mochila é necessário que seu peso seja inferior a capacidade da mochila. Ou seja, seja o objeto $i$ pode está na mochila se $peso(i) < P$ , onde P é a capacidade dessa mochila.
-:::
-
-???
 
 Vamos dar uma lapidada na expressão matemárica abordada no checkpoint anterior e tentar criar uma forma de decidir se colocamos ou não o objeto na mochila.
 
@@ -555,4 +502,126 @@ int knapSack(int W, int wt[], int val[], int n)
 
 :::
 
+???
+
+
+Extra : Melhorando o algorítimo recursivo
+---------
+Será possível uma maneira de se "consertar" sucessivas recursões de valores? Isto é, criar uma espécie de memória, para que o algoritmo evite  calcular repetidamente o peso e valor de um item n vezes?
+
+Para isso, pode-se  utilizar um pouco mais da memória disponível, onde pode-se "guardar" dados já calculados, e assim evitar o cálculo de casos já abordados em outros subcasos.
+
+??? Checkpoint
+Qual seria uma possível estrutura para armazenar valores já calculados?
+
+::: Gabarito
+Uma matriz de inteiros do tipo 
+``` c
+int **valores;
+``` 
+
+Onde as linhas são indicações do **n** elementos, e as colunas representações dos **P** pesos associados ao subcojunto.
+:::
+???
+
+Dessa forma, devemos então sempre analisar duas condições a cada item analisado:
+* Se o item já foi analisado, retorna-se esse item sem a necessidade de se recalcular esse subconjunto;
+
+* Se o item não foi analisado, analisa-se este dentro das conjunturas dos dois casos abordados na recursão.
+
+??? Checkpoint
+Qual seria a condição inicial da matriz de valores para se possibilitar uma diferenciação entre um valor já calculado e outro que não?
+
+::: Gabarito
+Inicializar a matriz, com um valor que não seja possível de se obter para a gama de problemas a serem resolvidos.
+
+No contexto do Minerador (o escopo de problemas que pretendemos aqui resolver) não faz sentido estas possuírem pesos ou valores que sejam menores que zero (negativos). Dessa forma, podemos iniciar a matriz com um números negativos, que nos permitam diferenciar entre valores já obtidos e outros não.
+:::
+???
+
+Dessa forma, uma primeira modificação a se realizar é:
+``` c
+int mochila(int peso_max, int pesos[], int valores[], int n) {
+    int **valores_matriz;
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < peso_max + 1; j++){
+            valores_matriz[i][j] = -1;
+        }
+    }
+    /* Resto do código */
+}
+```
+
+Certo, agora temos uma matriz que irá alocar para dados **n** elementos, **P+1** pesos possíveis, que irão nos economizar cálculos de subcasos já analisados para tal combinação.
+
+Agora temos que combinar o espaço possibilitado por essa matriz com a estratégia recursiva.
+
+
+??? Checkpoint
+Crie uma função auxiliar chamada *mochila_recusiva*, que receba os mesmos parâmetros de mochila, além da matriz criada, e que resolva os subcasos ainda não calculados via recursão e retorne os calculados caso os encontre na matriz.
+
+**DICA**: Boa parte do código pode ser aproveitado do algoritmo recursivo já construído, lembre-se sempre de armazenar o valor calculado em seus respectivo local na matriz.
+
+::: Gabarito
+``` c
+int mochila_recursiva(int peso_max, int pesos[], int valores[],
+                     int n, int **matriz_valores) {
+    if (n == 0 || peso_max == 0){
+        return 0;
+    }
+
+    //Valor já foi encontrado na matriz
+    if(matriz_valores[n][peso_max] != 1){
+        return matriz_valores[n][peso_max];
+    }
+
+    if (pesos[n - 1] > peso_max){
+        matriz_valores[n][peso_max] = mochila_recursiva(peso_max, pesos, 
+                                            valores, n - 1,matriz_valores);
+        return matriz_valores[n][peso_max];
+    }
+
+    caso1 = mochila_recursiva(peso_max, pesos, valores, n - 1);
+
+    caso2 = valores[n - 1] + mochila_recursiva(peso_max - pesos[n - 1], pesos, 
+    valores, n - 1);
+
+    matriz_valores[n][peso_max] = max(caso1, caso2);
+    return matriz_valores[n][peso_max];
+}
+```
+:::
+???
+
+Assim, basta realizar uma chamada desssa função dentro da função *mochila*:
+
+``` c
+int mochila(int peso_max, int pesos[], int valores[], int n) {
+    int **valores_matriz;
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < peso_max + 1; j++){
+            valores_matriz[i][j] = -1;
+        }
+    }
+    return mochila_recursiva(peso_max, pesos, valores, n - 1, valores_matriz);
+}
+```
+Feito! Conseguimos combinar a orquestração recursiva da abordagem top-down para varrer todos os casos possíveis, com a regalia de não termos de ter que recalcular subcasos já obtidos.
+
+??? Checkpoint
+Qual a complexidade temporal do código acima?
+::: Gabarito
+$$O(pesoMax*n)$$
+Visto que no pior caso, percorre-se todas as entradas da matriz de linhas **n**, e colunas **pesos**.
+???
+
+Dessa maneira, conseguimos uma abordagem um pouco mais eficiente em termos de complexidade temporal.
+??? Checkpoint
+Compare a complexidade de espaço das duas propostas abordadas.
+
+**DICA**: Em recursões utilizadas para **n** elementos, cerca de **n** espaços de pilha auxiliar são alocados durante a execução do código.
+::: Gabarito
+| Proposta 1 | Proposta 2 |
+|----------|----------|
+| $O(n)$        | $O(pesoMax*n)$         |
 ???
