@@ -125,7 +125,7 @@ A árvore a seguir busca formar todos os subconjuntos possíveis de joias dentro
 
 Tente completar a árvore, adicionando as condições em que joia [3] estaria dentro ou fora da mochila, seguindo o mesmo raciocíneo do inicio da árvore.
 
-No ultimo andar de construção dessa árvore vocẽ deve obter todos os subconjuntos possíveis de configuração da mochila. 
+**DICA** : No ultimo andar de construção dessa árvore vocẽ deve obter todos os subconjuntos possíveis de configuração da mochila. 
 
 ::: Gabarito
 ![](tree.jpg)
@@ -169,7 +169,7 @@ Para isso considere uma função $F(x,C)$ que representa a soma de valores das j
 
 ![](ideacaoMatematica.png)
 
-1. A joia $X_n$ está na solução ótima :  Valor(n) + $F(n-1 , P - P(n))$ 
+1. A joia $X_n$ está na solução ótima :  Valor(n) + $F(n-1 , P - P(n))$ , para isso o item deve possuir $Peso(n) < Capacidade \ mochila$
 
 2. A joia $X_n$ não está na solução ótima :  $F(n-1 , P)$
 
@@ -190,22 +190,32 @@ Para o escopo de problemas que pretendemos resolver, considera-se a entrada apen
 
 ``` c
 int mochila(int peso_max, int pesos[], int valores[], int n) {
-    if (n == 0 || peso_max == 0){
+    if (n == 0 || peso_max == 0){        // Nenhum item a ser adicionado ou Mochila de capacidade zero
         return 0;
     }
 
-    if (pesos[n - 1] > peso_max){
+    if (pesos[n - 1] > peso_max){       // Peso do item maior que a capacidade da mochila 
         return mochila(peso_max, pesos, valores, n - 1);
     }
 }
 
 ```
-Em seguida, deve-se analisar o máximo entre os dois casos afirmados no último checkpoint:
-* Valor máximo obtido por n-1 itens e peso P da mochila (excluindo n-ésimo item).
 
-* Valor do n-ésimo item mais o valor máximo obtido por n-1 itens e P da mochila menos o peso do n-ésimo item (incluindo o n-ésimo item).
+Vamos agora abordar o caso que um item **cabe na mochila** , ou seja , tem seu $peso < capacidade$ devemos analisar se devemos ou não adiciona-lo na mochila. Será que devemos adiciona-lo na mochila?
 
-Cria-se uma função auxiliar para o cálculo do máximo dentre dois inteiros:
+Para respondermos essa pergunta temos que questionar : o item $i$ está  na configuração ótima da mochila ? 
+
+Tomamos essa decisão analisando a configuração ótima da mochila nas duas situações :
+
+1 - O item **está na mochila**.
+
+2 - O item **não está na mochila**.
+
+A situação em que a configuração resulta na **maior soma de valores** dentro da mochila será escolhida.
+
+
+Como estamos pensando na **maior soma entre duas configurações da mochila**, faz sentido criar uma função auxiliar para o cálculo do máximo dentre dois valores inteiros:
+
 ``` c
 int max(int a, int b){
     if (a>b){
@@ -216,16 +226,26 @@ int max(int a, int b){
 ``` 
 
 ??? Checkpoint
-Traduza para código, em termos das entradas dispostas, os dois casos acima de valores possíveis.
+
+Em um **checkpoint anterior** ja abordamos a situação em que uma joia $X_n$ pertence a configuração ótima da mochila e a situação em que ela não pertence. 
+
+Pense de que forma recursiva podemos chamar a função **mochila( ... )** no código, de forma a abordar a situação em que o item $X_n$ está na configuração ótima da mochila (2) e o caso em que ele não está (1).
 
 ::: Gabarito
-``` c
-    caso1 = mochila(peso_max, pesos, valores, n - 1);
+``` 
+    int caso1 = mochila(peso_max, pesos, valores, n - 1);
 
-    caso2 = valores[n - 1] + mochila(peso_max - pesos[n - 1], pesos,  valores, n - 1);
+    int caso2 = valores[n - 1] + mochila(peso_max - pesos[n - 1], pesos,  valores, n - 1);
 ```
 :::
 ???
+
+!!!Importante
+Toda vez que tomamos a decisão de adicionar uma joia $X_n$ passamos a ter que observar qual seria a solução ótima de um mochila com capacidade $P - P(n)$ com apenas $n-1$ objetos para inserir ! 
+
+**É como se estivessemos analisando uma nova mochila**!
+!!!
+
 Juntando tudo isso, chegamos a definição do código abaixo, que se mostra efetivo para solucionar o problema requerido.
 
 ``` c
@@ -238,9 +258,9 @@ int mochila(int peso_max, int pesos[], int valores[], int n) {
         return mochila(peso_max, pesos, valores, n - 1);
     }
 
-    caso1 = mochila(peso_max, pesos, valores, n - 1);
+    int caso1 = mochila(peso_max, pesos, valores, n - 1);
 
-    caso2 = valores[n - 1] + mochila(peso_max - pesos[n - 1], pesos, 
+    int caso2 = valores[n - 1] + mochila(peso_max - pesos[n - 1], pesos, 
     valores, n - 1);
 
     return max(caso1, caso2);
@@ -248,20 +268,33 @@ int mochila(int peso_max, int pesos[], int valores[], int n) {
 
 ```
 
-Feito! O algoritmo acima é conhecido por "*Algoritmo Guloso*" ou "*Força-Bruta*", pois explora todas as combinações de n itens a serem analisados.
+<img src="levaOuro.png" alt="mineiro feliz" width="200" style="display: block; margin: 0 auto"/>
+&nbsp;
+
+Feito! Construímos um **algoritmo recursivo** que resolve o problema da mochila explorando todas as combinações/subconjunto de n itens a serem analisados.
+
 ??? Checkpoint
-Qual é a complexidade temporal do algoritmo de Força Bruta?
+Qual é a complexidade temporal do **algoritmo recursivo** construido?
 
 ::: Gabarito
 $$O(2^n)$$
 Isso ocorre, por conta da função computar os mesmos subcasos a cada recursão, deixando assim a complexidade do tipo exponencial, visto que para cada item, existe um subcaso em que o item se engloba e não se engloba, gerando assim, o total de $2^n$ possibilidades.
+
+<img src="chateado.png" alt="mineiro feliz" width="150" style="display: block; margin: 0 auto"/>
+&nbsp;
+
+
 :::
 ???
 
-Como pode-se ver, apesar de uma solução possível, parece exaustiva demais para solucionar o problema. Será que existe maneiras mais adequadas de solucionar o mesmo problema?
+Como pode-se ver pela solução do checkpoint anterior, apesar de uma solução possível, parece exaustiva demais para solucionar o problema. Será que existe maneiras mais adequadas de solucionar o mesmo problema?
 
 Utilizando Programação dinâmica
 ---------
+
+Acabamos de desenvolver um algorítimo recursivo que soluciona o nosso problema da mochila, mas como foi possível observar pela complexidade desse algorítimo ele não se apresenta algo viável quando estamos falando de uma entrada com muitos itens (n grande). 
+
+Dito isso, vamos começar a pensar em outra abordagem utilizando a programação conhecida como **dinâmica**.  
 
 A programação dinâmica é um método de desenvolvimento que busca encontrar a solução de vários subproblemas para, daí então, encontrar a solução do problema geral, em uma abordagem chamada bottom-top (ao contrário do que se ocorre com a proposta recursiva visto anteriormente).
 
@@ -274,17 +307,6 @@ Algum palpite ?
 
 :::
 ???
-
-
-Toda vez que tomamos a decisão de adicionar um objeto $i$ passamos a ter que observar qual seria a solução ótima de um mochila com capacidade $P - P_i$ e $n-1$ objetos para inserir ! **É como se tivessemos analisando uma nova mochila**!
-
-Essa ideia é fundamental para começarmos a pensar em nosso algorítimo!
-
-Vamos dar uma lapidada na expressão matemárica abordada no checkpoint anterior e tentar criar uma forma de decidir se colocamos ou não o objeto na mochila.
-
-Suponha que a função $F(i,p)$ representa a **solução ótima** para os $i$ primeiros elementos de uma mochila com capacidade $P$. Podemos definir essa função de duas maneiras diferentes, uma que considera o caso em que o objeto $i$ cabe na mochila e outra que considera o caso em que ele não cabe na mochila.
-
-![](iteracao2.png)
 
 Legal ! Temos agora uma ideia de como decidir se o objeto está ou não na mochila em seu caso ótimo!
 
