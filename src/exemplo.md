@@ -401,7 +401,7 @@ int knapSack(int W, int wt[], int val[], int n)
         {
             
             if (i == 0 || w == 0){
-                K[i][w] = 0; 
+                F[i][w] = 0; 
             }
 
             ...
@@ -520,7 +520,7 @@ int knapSack(int W, int wt[], int val[], int n)
         }
     }
  
-    return K[n][W];
+    return F[n][W];
 }
 ```
 
@@ -528,8 +528,78 @@ int knapSack(int W, int wt[], int val[], int n)
 
 ???
 
+Pronto ! Agora temos uma implementação da solução do problema da mochila por meio de programação dinâmica !
 
-Extra : Melhorando o algorítimo recursivo
+??? Checkpoint
+Qual é a complexidade temporal do **algoritmo de programação dinâmica** construido?
+
+::: Gabarito
+$$O(n*W)$$
+
+Onde 'n' é o número de elementos que podem ser adicionados na mochila e 'W' é a capacidade da mochila.
+:::
+???
+
+Estamos quase no fim ...  
+
+No algorítimo que implementamos precimos de espaço na memória para armazenar uma matriz [N° elementos - 1][Capacidade -1]. 
+
+Será que não há um jeito melhor de guardarmos as configurações ótima da mochila ?
+
+Programação Dinâmica (Otimizando o espaço)
+---------
+
+Vamos voltar um pouco e analisar melhor uma das tabelas que montamos anteriormente:
+
+![](table/table8.png)
+
+Quando olhamos linha a linha dessa tabela observamos que alguns elementos da matriz parecem ociosos ou desnecessários para chegarmos a conclusão final. Por exemplo, a linha 0 e coluna 0 , ocupam espaço na memória simplesmente para tratar os casos em que a mochila possui capacidade nula ou nenhum item para inserir. Outro exemplo é o elemento (1,2) na matriz , nesse caso estarimos obtendo a situação ótima quando tempo o elemento 1 , de peso 4kg , e a mochila de capacidade 2kg. O elemento (1,2) não cabe nessa configuração da mochila mas ainda sim estamos guardando espaço na memória para indicar isso na matriz. Será que isso é mesmo necessário?
+
+Como uma alternativa pode ser o uso de um vetor ao invez de uma matriz para guardar os caso ótimos da mochila.
+
+Esse array seria como uma linha de inteira de nossa antiga tabela, para um item específico , que vai se atualizando conforme o necessário. 
+
+![](otimizando_memoria.png)
+
+
+Esse vetor ao final de sua implementação irá guardar a melhor configuração possível (soma de valores) para cada uma das mochilas que possuem capacidade entre 0 e Peso_máximo
+A implementação em dessa ideia pode ser entendida no código abaixo:
+
+...
+
+
+Vamos ver se você entendeu ...
+---------
+
+??? Exercício - Algorítimo Recursivo
+
+::: Gabarito
+
+::: 
+
+???
+
+??? Exercício - Programação Dinâmica
+
+Considere a seguinte configuração de itens que podem ser colocados em uma mochila de capacidade **4Kg**.
+
+|  Itens | Valor | Peso (Kg) |
+|----------|----------|----------|
+| $1$        | 10       |   1   
+| $2$        | 7         | 2   
+| $3$        | 2         |  1   
+  
+
+Desenhe a tabela (N° itens x Capacidade) dos subconjuntos ótimos de configuração da mochila. 
+
+::: Gabarito
+![](questao_tabela_revisa.png)
+::: 
+
+???
+
+
+Conteúdo Extra : Melhorando o algorítimo recursivo
 ---------
 Será possível uma maneira de se "consertar" sucessivas recursões de valores? Isto é, criar uma espécie de memória, para que o algoritmo evite  calcular repetidamente o peso e valor de um item n vezes?
 
@@ -649,3 +719,5 @@ Compare a complexidade de espaço das duas propostas abordadas.
 |----------|----------|
 | $O(n)$        | $O(pesoMax*n)$         |
 ???
+
+![](end.gif)
