@@ -296,25 +296,19 @@ Acabamos de desenvolver um algorítimo recursivo que soluciona o nosso problema 
 
 Dito isso, vamos começar a pensar em outra abordagem utilizando a programação conhecida como **dinâmica**.  
 
-A programação dinâmica é um método de desenvolvimento que busca encontrar a solução de vários subproblemas para, daí então, encontrar a solução do problema geral, em uma abordagem chamada bottom-top (ao contrário do que se ocorre com a proposta recursiva visto anteriormente).
-
-??? Checkpoint
-
-Legal ... Abordagem bottom up, talvez você conheça algum algorítimo que também usa essa estratégia. 
-Algum palpite ? 
-
-::: Gabarito
-
-:::
-???
-
-Legal ! Temos agora uma ideia de como decidir se o objeto está ou não na mochila em seu caso ótimo!
+A programação dinâmica é um método de desenvolvimento que busca encontrar a solução de vários subproblemas para, daí então, encontrar a solução do problema geral, em uma abordagem chamada **bottom-top** (ao contrário do que se ocorre com a proposta recursiva visto anteriormente).  A principal característica distintiva entre esse método e o algorítimo recursivo é a utilização de uma tabela que armazena as soluções das várias subinstâncias do problema. Por conta disso, esse estratégia pode ser vagamente definida como **"recursão com apoio de uma tabela"**.
 
 !!! Aviso
-Quando um objeto cabe na mochila , a decisão de coloca-lo ou não é definido pelo máximo entre o valor contido na mochila com o objeto $i$ e sem ele.
+
+Os conceitos necessários para decisão se um item $X_n$ está ou não na configuração ótima da mochila foram desenvolvidos na implementação do algorítimo recursivo.
+
+Esses princípios serão utilizados também para o desenvolvimento dessa abordagem então não prossiga se não tiver entendido bem o handout até aqui!
+
 !!!
 
-Vamos colocar me prática o que aprendemos do problema até agora e tentar criar a função que o resolve de forma dinâmica. Considere a função inicial a seguir:
+Vamos começar a implementar o código que resolve nossa questão de forma dinâmica. Como dito anteriormente a principal diferença entre a abordagem recursiva e esssa é a utilização de um tabela para armazenar as soluções das subinstancias do problema.
+
+Vamos iniciar a implementação criando uma a função com a definição dessa tabela:
 
 ``` c
 
@@ -327,7 +321,7 @@ int knapSack(int W, int wt[], int val[], int n)
 }
 ```
 
-A `md função knapSack` recebe os seguintes argumentos:
+Considere que a `md função knapSack` recebe os seguintes argumentos:
 
 * $\textbf{W}$  : Inteiro que representa o ṕeso da mochila.
 
@@ -337,7 +331,11 @@ A `md função knapSack` recebe os seguintes argumentos:
 
 * $\textbf{n}$   : Inteiro que representa o número de objetos.
 
-Na função definida acima vemos que $F(i,p)$ definida anteriormente está representada em forma de matriz. Essa matriz pode ser interpretada como uma **tabela que será preenchida** para a determinação do valor na solução ótima da mochila.
+Na função definida acima vemos que $F(x,c)$ definida anteriormente está representada em forma de matriz. Essa matriz pode ser interpretada como uma **tabela que será preenchida** para a determinação do valor na solução ótima da mochila.
+
+!!! Lembrete
+$F(x,c)$ representa a soma de valores das joias da configuração ótima quando possuimos x jóias a serem adicionadas e uma mochila de capacidade c.
+!!!
 
 ![](table1.png)
 
@@ -351,10 +349,15 @@ Na função definida acima vemos que $F(i,p)$ definida anteriormente está repre
 
 Voltemos novamente ao problema do mireiro e suas joias, imagine a situação em que ele possui os seguintes objetos com seus respectivos pesos e valores:
 
-![](mineiro.png)
+<img src="prog_dinamica.png" alt="prog dinamica" width="450" style="display: block; margin: 0 auto"/>
+&nbsp;
+
 
 ??? Checkpoint
-De acordo com o código da `md função knapSack`, qual a dimensão na matriz que representa $F(i,p)$ ? 
+
+Utilizando os dados do problema apresentados , qual a dimensão na matriz $F[n + 1][W + 1]$ nesse caso ?
+
+**DICA** : Pense na definição dessa matriz.
 
 ::: Gabarito
 A matriz deve possuir **4 linhas** (0 a 3 objetos) e **7 colunas** (pesos de 0 a capacidade da mochila)
