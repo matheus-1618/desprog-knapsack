@@ -41,7 +41,7 @@ Temos assim dois possíveis cenários para obter a **configuração ótima** da 
 1. A joia Xn pertence a solução de **configuração ótima** da nossa mochila e devemos coloca-lo.
 
 
-2. O joia Xn não pertence a **solução ótima** da mochila e , portanto ,  não devemos inseri-lo.
+2. O joia Xn não pertence a **configuração ótima** da mochila e , portanto ,  não devemos inseri-lo.
 
 
 ??? Checkpoint
@@ -123,7 +123,7 @@ A árvore a seguir busca formar todos os subconjuntos possíveis de joias dentro
 
 ??? Checkpoint
 
-Tente completar a árvore, adicionando as condições em que joia [3] estaria dentro ou fora da mochila, seguindo o mesmo raciocíneo do inicio da árvore.
+Tente completar a árvore, adicionando as condições em que joia [3] estaria dentro ou fora da mochila, seguindo o mesmo raciocínio do inicio da árvore.
 
 **DICA** : No ultimo andar de construção dessa árvore vocẽ deve obter todos os subconjuntos possíveis de configuração da mochila. 
 
@@ -292,15 +292,15 @@ Como pode-se ver pela solução do checkpoint anterior, apesar de uma solução 
 Utilizando Programação dinâmica
 ---------
 
-Acabamos de desenvolver um algorítimo recursivo que soluciona o nosso problema da mochila, mas como foi possível observar pela complexidade desse algorítimo ele não se apresenta algo viável quando estamos falando de uma entrada com muitos itens (n grande). 
+Acabamos de desenvolver um Algoritmo recursivo que soluciona o nosso problema da mochila, mas como foi possível observar pela complexidade desse Algoritmo ele não se apresenta algo viável quando estamos falando de uma entrada com muitos itens (n grande). 
 
 Dito isso, vamos começar a pensar em outra abordagem utilizando a programação conhecida como **dinâmica**.  
 
-A programação dinâmica é um método de desenvolvimento que busca encontrar a solução de vários subproblemas para, daí então, encontrar a solução do problema geral, em uma abordagem chamada **bottom-top** (ao contrário do que se ocorre com a proposta recursiva visto anteriormente).  A principal característica distintiva entre esse método e o algorítimo recursivo é a utilização de uma tabela que armazena as soluções das várias subinstâncias do problema. Por conta disso, esse estratégia pode ser vagamente definida como **"recursão com apoio de uma tabela"**.
+A programação dinâmica é um método de desenvolvimento que busca encontrar a solução de vários subproblemas para, daí então, encontrar a solução do problema geral, em uma abordagem chamada **bottom-top** (ao contrário do que se ocorre com a proposta recursiva visto anteriormente).  A principal característica distintiva entre esse método e o Algoritmo recursivo é a utilização de uma tabela que armazena as soluções das várias subinstâncias do problema. Por conta disso, esse estratégia pode ser vagamente definida como **"recursão com apoio de uma tabela"**.
 
 !!! Aviso
 
-Os conceitos necessários para decisão se um item $X_n$ está ou não na configuração ótima da mochila foram desenvolvidos na implementação do algorítimo recursivo.
+Os conceitos necessários para decisão se um item $X_n$ está ou não na configuração ótima da mochila foram desenvolvidos na implementação do Algoritmo recursivo.
 
 Esses princípios serão utilizados também para o desenvolvimento dessa abordagem então não prossiga se não tiver entendido bem o handout até aqui!
 
@@ -478,7 +478,7 @@ $$F(1,1) = F(0,1) = 0 $$
 
 ??? Exercício
 
-Usando o raciocíneo do checkpoint anterior, como ficaria a tabela inteiramente preenchida?
+Usando o raciocínio do checkpoint anterior, como ficaria a tabela inteiramente preenchida?
 
 ::: Gabarito
 
@@ -531,7 +531,7 @@ int knapSack(int W, int wt[], int val[], int n)
 Pronto ! Agora temos uma implementação da solução do problema da mochila por meio de programação dinâmica !
 
 ??? Checkpoint
-Qual é a complexidade temporal do **algoritmo de programação dinâmica** construido?
+Qual é a complexidade temporal do **algoritmo de programação dinâmica** construído?
 
 ::: Gabarito
 $$O(n*W)$$
@@ -542,28 +542,84 @@ Onde 'n' é o número de elementos que podem ser adicionados na mochila e 'W' é
 
 Estamos quase no fim ...  
 
-No algorítimo que implementamos precimos de espaço na memória para armazenar uma matriz [N° elementos - 1][Capacidade -1]. 
+No Algoritmo que implementamos precimos de espaço na memória para armazenar uma matriz [N° elementos - 1][Capacidade -1]. 
 
 Será que não há um jeito melhor de guardarmos as configurações ótima da mochila ?
 
-Programação Dinâmica (Otimizando o espaço)
+Melhorando um pouco mais..
 ---------
 
 Vamos voltar um pouco e analisar melhor uma das tabelas que montamos anteriormente:
 
 ![](table/table8.png)
 
-Quando olhamos linha a linha dessa tabela observamos que alguns elementos da matriz parecem ociosos ou desnecessários para chegarmos a conclusão final. Por exemplo, a linha 0 e coluna 0 , ocupam espaço na memória simplesmente para tratar os casos em que a mochila possui capacidade nula ou nenhum item para inserir. Outro exemplo é o elemento (1,2) na matriz , nesse caso estarimos obtendo a situação ótima quando tempo o elemento 1 , de peso 4kg , e a mochila de capacidade 2kg. O elemento (1,2) não cabe nessa configuração da mochila mas ainda sim estamos guardando espaço na memória para indicar isso na matriz. Será que isso é mesmo necessário?
+Quando olhamos linha a linha dessa tabela observamos que alguns elementos da matriz parecem ociosos ou desnecessários para chegarmos a conclusão final. 
 
-Como uma alternativa pode ser o uso de um vetor ao invez de uma matriz para guardar os caso ótimos da mochila.
+Por exemplo, a linha 0 e coluna 0 , ocupam espaço na memória simplesmente para tratar os casos em que a mochila possui capacidade nula ou nenhum item para inserir. 
+
+Outro exemplo é o elemento (1,2) na matriz , nesse caso estarimos obtendo a situação ótima quando tempo o elemento 1 , de peso 4kg , e a mochila de capacidade 2kg. O elemento (1,2) não cabe nessa configuração da mochila mas ainda sim estamos alocando espaço na memória para indicar isso na matriz. **Será que isso é mesmo necessário?**
+
+Uma alternativa viável, pode ser a utilização de um vetor ao invés de uma matriz inteira.
 
 Esse array seria como uma linha de inteira de nossa antiga tabela, para um item específico , que vai se atualizando conforme o necessário. 
+
+??? Checkpoint
+Qual dimensão reduziríamos da matriz? 
+
+A de pesos possíveis (0 até W) ou de elementos (0 até n-1)?
+
+::: Gabarito
+A de elementos, desse modo, poderíamos analisar para cada combinação possível de pesos, armazenar-se apenas aquela que retorna o valor máximo
+:::
+???
+
+Dessa maneira, simplifica-se e muito a questão de armazenamento dos valores, visto que  se começarmos a percorrer as linhas de elementos da direita para a esquerda, isso poderá ser feito apenas com uma única linha, guardando o valor máximo entre:
+* O valor atual guardado na posição do vetor
+* O valor dado pelo elemento do peso atual menos o peso do elemento imediatamente anterior, mais o valor agregado pelo elemento iterado.
 
 ![](otimizando_memoria.png)
 
 
-Esse vetor ao final de sua implementação irá guardar a melhor configuração possível (soma de valores) para cada uma das mochilas que possuem capacidade entre 0 e Peso_máximo
-A implementação em dessa ideia pode ser entendida no código abaixo:
+Esse vetor ao final de sua implementação irá guardar a melhor configuração possível (soma de valores) para cada uma das mochilas que possuem capacidade entre 0 e Peso_máximo, visto que ele sempre compara e armazena o maior valor possível a ser retorna nessa estrutura de dados e agora sem a necessidade de se armazenar valores ociosos de casos que não sejam necessários.
+
+Nota-se que com essa implementação, devemos iniciar da direita (final do array de pesos), e ir até que o peso seja nulo, varrendo todas as pos
+
+
+??? Checkpoint
+**Desafio**
+
+Implemente a ideia acima em código.
+
+**DICA**: Parta do código de Programação Dinâmica ilustrado acima.
+
+::: Gabarito
+```c
+int knapSack(int W, int wt[], int val[], int n)
+{
+    //Inicializando o vetor a ser utilizado
+    //Coloque-se zero em todos por fins de simplicidade
+    int vetor[W + 1];
+    for (int j = 0; j < W + 1; j++){
+        vetor[j] = 0;
+    }
+ 
+    for (int i = 1; i < n + 1; i++) {
+        for (int w = W; w >= 0; w--) {
+            //Caso peso analisado seja menor ou igual ao vetor de pesos da mochila
+            if (wt[i - 1] <= w)
+                // Valor atual guardado no vetor
+                int caso1 = vetor[w];
+                //Valor retornado pelo peso atual menos o peso do elemento iterado, mais o valor deste.
+                int caso2 = vetor[w - wt[i - 1]] + val[i - 1];
+                vetor[w] = max(caso1,
+                            caso2);
+        }
+    }
+    return vetor[W]; 
+}
+```
+:::
+???
 
 ...
 
@@ -571,7 +627,7 @@ A implementação em dessa ideia pode ser entendida no código abaixo:
 Vamos ver se você entendeu ...
 ---------
 
-??? Exercício - Algorítimo Recursivo
+??? Exercício - Algoritmo Recursivo
 
 ::: Gabarito
 
@@ -581,7 +637,7 @@ Vamos ver se você entendeu ...
 
 ??? Exercício - Programação Dinâmica
 
-Considere a seguinte configuração de itens que podem ser colocados em uma mochila de capacidade **4Kg**.
+Considere a seguinte configuração de itens que podem ser colocados em uma mochila de capacidade **2Kg**.
 
 |  Itens | Valor | Peso (Kg) |
 |----------|----------|----------|
@@ -599,7 +655,7 @@ Desenhe a tabela (N° itens x Capacidade) dos subconjuntos ótimos de configura�
 ???
 
 
-Conteúdo Extra : Melhorando o algorítimo recursivo
+Conteúdo Extra : Melhorando o Algoritmo recursivo
 ---------
 Será possível uma maneira de se "consertar" sucessivas recursões de valores? Isto é, criar uma espécie de memória, para que o algoritmo evite  calcular repetidamente o peso e valor de um item n vezes?
 
