@@ -19,6 +19,7 @@
   "dependencies": {
     "del": "^6.0.0",
     "gulp-cached": "^1.1.1",
+    "gulp-cli": "^2.3.0",
     "handlebars": "^4.7.6",
     "jsdom": "^16.6.0",
     "markdown-it": "^12.1.0",

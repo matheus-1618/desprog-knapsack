@@ -232,10 +232,11 @@ Em um **checkpoint anterior** ja abordamos a situação em que uma joia $X_n$ pe
 Pense de que forma recursiva podemos chamar a função **mochila( ... )** no código, de forma a abordar a situação em que o item $X_n$ está na configuração ótima da mochila (2) e o caso em que ele não está (1).
 
 ::: Gabarito
-``` 
+```c 
     int caso1 = mochila(peso_max, pesos, valores, n - 1);
 
-    int caso2 = valores[n - 1] + mochila(peso_max - pesos[n - 1], pesos,  valores, n - 1);
+    int caso2 = valores[n - 1] + 
+                mochila(peso_max - pesos[n - 1], pesos,  valores, n - 1);
 ```
 :::
 ???
@@ -561,7 +562,6 @@ Outro exemplo é o elemento (1,2) na matriz , nesse caso estarimos obtendo a sit
 
 Uma alternativa viável, pode ser a utilização de um vetor ao invés de uma matriz inteira.
 
-Esse array seria como uma linha de inteira de nossa antiga tabela, para um item específico , que vai se atualizando conforme o necessário. 
 
 ??? Checkpoint
 Qual dimensão reduziríamos da matriz? 
@@ -569,20 +569,65 @@ Qual dimensão reduziríamos da matriz?
 A de pesos possíveis (0 até W) ou de elementos (0 até n-1)?
 
 ::: Gabarito
-A de elementos, desse modo, poderíamos analisar para cada combinação possível de pesos, armazenar-se apenas aquela que retorna o valor máximo
+A de elementos.
+É possível retirar esse dimensão da estrutura de armazenamento, visto que o único valor que representa uma restrição é o **peso** do conjunto de itens analisado.
+
+Assim pode-se analisar para cada combinação de itens que gerem dado peso, qual é o subconjunto ótimo (aquele que retorna maior valor), e armazenar somente se o atual for maior que aquele que já está na posição.
 :::
 ???
 
-Dessa maneira, simplifica-se e muito a questão de armazenamento dos valores, visto que  se começarmos a percorrer as linhas de elementos da direita para a esquerda, isso poderá ser feito apenas com uma única linha, guardando o valor máximo entre:
-* O valor atual guardado na posição do vetor
-* O valor dado pelo elemento do peso atual menos o peso do elemento imediatamente anterior, mais o valor agregado pelo elemento iterado.
+Dessa maneira, simplifica-se e muito a questão de armazenamento dos valores. Diminuindo a complexidade de espaço antes de $O(n*W)$ para $O(n)$.
+
+Mas como, efetivamente, essa idéia pode ser implementada na prática?
+
+Vamos pensar de maneira mais simples...
+
+??? Checkpoint
+Como devemos percorrer esse vetor, com objetivo de **sempre** armazenar os valores que retornem subconjunto ótimo?
+
+**DICA**: Pense na restrição das combinações de peso.
+
+::: Gabarito
+Idealmente da direita pra esquerda. Pois ao analisar o dado peso (entre 0 e Peso da Mochila), é possível analisar se já possuímos a solução ótima, ou se existe algum outro conjunto dentro da restrição de peso que ainda tenha valor maior, iniciando da situação que a mochila está vazia (Peso Máximo) até quando ela chega em sua capacidade máxima (0 ou algum valor menor que Peso Máximo).
+:::
+???
+
+Assim, para cada posição a ser iterada, devemos comparar a o valor alocado na posição atual com uma situação do elemento analisado, gerando assim, duas possibilidades de escolha:
+
+* O valor atual guardado na posição do vetor;
+* O valor dado pelo do peso analisado menos o peso do elemento i somado pelo o valor agregado do elemento i.
+
+A segunda alternativa, corresponde a simplesmente adicionar um item na mochila, visto que o peso resultante será o peso restante na mochila, após alocarmos o elemento i. Muito parecido com o que fazemos anteriormente, não? 
+
+!!!Lembre-se
+Toda vez que tomamos a decisão de adicionar um elemento $X_n$ passamos a ter que observar qual seria a solução ótima de um mochila com capacidade $P - P(n)$ com apenas $n-1$ objetos para inserir ! 
+
+**É como se estivessemos analisando uma nova mochila**!
+!!!
+
+Ou seja, estamos sendo capazes de manter a mesma lógica de análise de subcasos, mas usando muito menos espaço para alocar os valores.
+
 
 ![](otimizando_memoria.png)
 
 
-Esse vetor ao final de sua implementação irá guardar a melhor configuração possível (soma de valores) para cada uma das mochilas que possuem capacidade entre 0 e Peso_máximo, visto que ele sempre compara e armazena o maior valor possível a ser retorna nessa estrutura de dados e agora sem a necessidade de se armazenar valores ociosos de casos que não sejam necessários.
+??? Checkpoint
+Em qual posição do vetor fica alocada o subconjunto ótimo?
 
-Nota-se que com essa implementação, devemos iniciar da direita (final do array de pesos), e ir até que o peso seja nulo, varrendo todas as pos
+::: Gabarito
+Na última, correspondente ao peso máximo da mochila, visto que ao iterarmos da direita pra esquerda, analisando item a item, tende-se a alocar os valores em ordem crescente, devido a substituição decorrente da combinação entre os possíveis subcasos, conforme as premisas nos tópicos acima. Interessante não?
+:::
+???
+
+
+Para ver como ocorre na prática essa alocação, suponha o exemplo abaixo, composto por uma mochila com capacidade de **4kg**, e três itens:
+* Item 1: Valor = 60, peso = 1kg
+* Item 2: Valor = 100, peso = 2kg
+* Item 3: Valor = 120, peso = 3kg
+
+Para preencher o vetor de valores, veja a animação abaixo, onde segue-se a premissa de comparar o valor da posição atual com o valor dado pelo do peso analisado menos o peso do elemento i somado pelo o valor agregado do elemento i.
+
+:optimiza
 
 
 ??? Checkpoint
@@ -590,7 +635,7 @@ Nota-se que com essa implementação, devemos iniciar da direita (final do array
 
 Implemente a ideia acima em código.
 
-**DICA**: Parta do código de Programação Dinâmica ilustrado acima.
+**DICA**: Parta do código de Programação Dinâmica na sessão anterior.
 
 ::: Gabarito
 ```c
@@ -609,10 +654,10 @@ int knapSack(int W, int wt[], int val[], int n)
             if (wt[i - 1] <= w)
                 // Valor atual guardado no vetor
                 int caso1 = vetor[w];
-                //Valor retornado pelo peso atual menos o peso do elemento iterado, mais o valor deste.
+                //Valor retornado pelo peso atual menos o 
+                //peso do elemento iterado, mais o valor deste.
                 int caso2 = vetor[w - wt[i - 1]] + val[i - 1];
-                vetor[w] = max(caso1,
-                            caso2);
+                vetor[w] = max(caso1, caso2);
         }
     }
     return vetor[W]; 
@@ -629,8 +674,18 @@ Vamos ver se você entendeu ...
 
 ??? Exercício - Algoritmo Recursivo
 
-::: Gabarito
+Considere a seguinte configuração de itens que podem ser colocados em uma mochila de capacidade **2Kg**.
 
+|  Itens | Valor | Peso (Kg) |
+|----------|----------|----------|
+| $1$        | 10       |   1   
+| $2$        | 7         | 2   
+| $3$        | 2         |  1  
+
+Desenhe a arvore de cada subcaso possível (item adicionado ou não), ilustrando o subcaso ótimo.
+
+::: Gabarito
+![](arvore.png)
 ::: 
 
 ???
